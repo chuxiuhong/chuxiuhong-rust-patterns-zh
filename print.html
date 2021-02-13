@@ -465,7 +465,8 @@ Rust对每个栈帧中的每个对象执行析构器代码。所以析构器即�
 <p><a href="idioms/../patterns/RAII.html">RAII</a>.</p>
 <h1><a class="header" href="#用memtake_-replace_在修改枚举变体时保持值的所有权" id="用memtake_-replace_在修改枚举变体时保持值的所有权">用<code>mem::{take(_), replace(_)}</code>在修改枚举变体时保持值的所有权</a></h1>
 <h2><a class="header" href="#说明-6" id="说明-6">说明</a></h2>
-<p>假设我们有一个至少有两种变体的枚举<code>&amp;mut MyEnum</code>，一种是<code>A { name: String, x: u8 }</code>，另一种是<code>B { name: String }</code>。现在我们想要当x=0时，将A变为B，同时变量除枚举类型变化外其他不变。</p>
+<p>假设我们有一个至少有两种变体的枚举<code>&amp;mut MyEnum</code>，一种是<code>A { name: String, x: u8 }</code>，另一种是<code>B { name: String }</code>。
+现在我们想要当x=0时，将A变为B，同时变量除枚举类型变化外其他不变。</p>
 <p>我们可以不用克隆<code>name</code>变体即可实现上述操作。</p>
 <h2><a class="header" href="#例子-5" id="例子-5">例子</a></h2>
 <pre><pre class="playground"><code class="language-rust edition2018">
@@ -1495,7 +1496,8 @@ impl MySetWrapper {
     iterator: Option&lt;NonNull&lt;KeysIter&lt;'static&gt;&gt;&gt;,
 }
 </code></pre>
-<p>用<code>transmute</code>来延长生命周期，然后用一个指针来隐藏它，这就够丑陋的。不过它还有更坏的：任何其他的操作将会导致Rust的<code>未定义行为</code>(undefined behavior)。</p>
+<p>用<code>transmute</code>来延长生命周期，然后用一个指针来隐藏它，这就够丑陋的。不过它还有更坏的：
+任何其他的操作将会导致Rust的<code>未定义行为</code>(undefined behavior)。</p>
 <p>在包装器内的<code>MySet</code>将会被其他函数在循环时操控，例如存储一个重复的新值。而API无法阻止这一点，并且事实上一些相似的C语言库也预期如此。</p>
 <p>一个<code>myset_store</code> 的简单实现如下：</p>
 <pre><code class="language-rust ignore">pub mod unsafe_module {
@@ -1700,9 +1702,9 @@ fn main() {
 <li><a href="https://doc.rust-lang.org/rust-by-example/macros.html">macro_rules!</a></li>
 </ul>
 <h1><a class="header" href="#新类型" id="新类型">新类型</a></h1>
-<p>如果在某些情况下，我们希望一个类型的行为类似于另一个类型，或者在编译时强制执行某些行为，而仅使用类型别名是不够的呢？</p>
-<p>举例来说，如果我们出于安全考虑想要创建一个<code>String</code>的自定义的<code>Display</code>实现（例如密码）。</p>
-<p>这种情况我们可以用<code>新类型</code>模式提供类型安全和封装。</p>
+<p>如果在某些情况下，我们希望一个类型的行为类似于另一个类型，或者在编译时强制执行某些行为，而仅使用类型别名是不够的呢？
+举例来说，如果我们出于安全考虑想要创建一个<code>String</code>的自定义的<code>Display</code>实现（例如密码）。
+这种情况我们可以用<code>新类型</code>模式提供类型安全和封装。</p>
 <h2><a class="header" href="#说明-23" id="说明-23">说明</a></h2>
 <p>用带有单独字段的结构来创建一个类型的不透明包装器。这将创建一个新类型，而不是类型的别名。</p>
 <h2><a class="header" href="#代码示例-7" id="代码示例-7">代码示例</a></h2>

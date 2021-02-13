@@ -223,7 +223,8 @@ impl MySetWrapper {
     iterator: Option&lt;NonNull&lt;KeysIter&lt;'static&gt;&gt;&gt;,
 }
 </code></pre>
-<p>用<code>transmute</code>来延长生命周期，然后用一个指针来隐藏它，这就够丑陋的。不过它还有更坏的：任何其他的操作将会导致Rust的<code>未定义行为</code>(undefined behavior)。</p>
+<p>用<code>transmute</code>来延长生命周期，然后用一个指针来隐藏它，这就够丑陋的。不过它还有更坏的：
+任何其他的操作将会导致Rust的<code>未定义行为</code>(undefined behavior)。</p>
 <p>在包装器内的<code>MySet</code>将会被其他函数在循环时操控，例如存储一个重复的新值。而API无法阻止这一点，并且事实上一些相似的C语言库也预期如此。</p>
 <p>一个<code>myset_store</code> 的简单实现如下：</p>
 <pre><code class="language-rust ignore">pub mod unsafe_module {
