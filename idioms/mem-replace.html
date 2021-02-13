@@ -169,8 +169,8 @@
                     <main>
                         <h1><a class="header" href="#用memtake_-replace_在修改枚举变体时保持值的所有权" id="用memtake_-replace_在修改枚举变体时保持值的所有权">用<code>mem::{take(_), replace(_)}</code>在修改枚举变体时保持值的所有权</a></h1>
 <h2><a class="header" href="#说明" id="说明">说明</a></h2>
-<p>假设我们有一个至少有两种变体的枚举<code>&amp;mut MyEnum</code>，一种是<code>A { name: String, x: u8 }</code>，另一种是<code>B { name: String }</code>。
-现在我们想要当x=0时，将A变为B，同时变量除枚举类型变化外其他不变。</p>
+<p>假设我们有一个至少有两种变体的枚举<code>&amp;mut MyEnum</code>，一种是<code>A { name: String, x: u8 }</code>，
+另一种是<code>B { name: String }</code>。现在我们想要当x=0时，将A变为B，同时变量除变体类型变化外其他不变。</p>
 <p>我们可以不用克隆<code>name</code>变体即可实现上述操作。</p>
 <h2><a class="header" href="#例子" id="例子">例子</a></h2>
 <pre><pre class="playground"><code class="language-rust edition2018">
