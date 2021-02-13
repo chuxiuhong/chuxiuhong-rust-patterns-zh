@@ -170,7 +170,9 @@
                         <h1><a class="header" href="#以借用类型为参数" id="以借用类型为参数">以借用类型为参数</a></h1>
 <h2><a class="header" href="#说明" id="说明">说明</a></h2>
 <p>当你为函数选择参数类型时，使用带强制隐式转换的目标会增加你代码的复杂度。在这种情况下，函数将会接受更多的输入参数类型。</p>
-<p>使用可切片类型或者胖指针类型没有限制。事实上，你应该总是用借用类型（<strong>borrowed type</strong>）而不是自有数据类型的借用（<strong>borrowing the owned type</strong>）。例如<code>&amp;str</code> 而非 <code>&amp;String</code>, <code>&amp;[T]</code> 而非 <code>&amp;Vec&lt;T&gt;</code>, 或者 <code>&amp;T</code> 而非 <code>&amp;Box&lt;T&gt;</code>.</p>
+<p>使用可切片类型或者胖指针类型没有限制。事实上，你应该总是用借用类型（<strong>borrowed type</strong>）,
+而不是自有数据类型的借用（<strong>borrowing the owned type</strong>）。
+例如<code>&amp;str</code> 而非 <code>&amp;String</code>, <code>&amp;[T]</code> 而非 <code>&amp;Vec&lt;T&gt;</code>, 或者 <code>&amp;T</code> 而非 <code>&amp;Box&lt;T&gt;</code>.</p>
 <p>当自有数据结构（owned type）的实例已经提供了一个访问数据的间接层时，使用借用类型可以让你避免增加间接层。举例来说，<code>String</code>类型有一层间接层，所以<code>&amp;String</code>将有两个间接层。我们可以用<code>&amp;Str</code>来避免这种情况，无论何时调用函数，强制<code>&amp;String</code>转换为<code>&amp;Str</code>。</p>
 <h2><a class="header" href="#例子" id="例子">例子</a></h2>
 <p>在这个例子中，我们将说明使用<code>&amp;String</code>与<code>&amp;Str</code>作为函数参数的区别。这个思路用于对比<code>&amp;Vec&lt;T&gt;</code> 和 <code>&amp;[T]</code>、 <code>&amp;T</code>和<code>&amp;Box&lt;T&gt;</code>也适用。</p>

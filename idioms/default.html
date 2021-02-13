@@ -169,8 +169,10 @@
                     <main>
                         <h1><a class="header" href="#default-特性" id="default-特性"><code>Default</code> 特性</a></h1>
 <h2><a class="header" href="#说明" id="说明">说明</a></h2>
-<p>许多Rust中的类型有一个构造器。然而，构造器是针对特定类型的。Rust不能抽象出一个代表所有带有<code>new()</code>方法的东西。为了实现这个想法，一个可被容器和其他泛型使用的<code>Default</code>特性应运而生（如 [<code>Option::unwrap_or_default()</code>）。尤其是一些容器已经在适当的情况下实现了它。</p>
-<p>单例容器如 <code>Cow</code>, <code>Box</code> 和 <code>Arc</code>为<code>Default</code>类型实现了<code>Default</code>，并且可以自动地对每个成员都实现<code>Default</code>的结构体支持<code>#[derive(Default)]</code>。所以越多的类型支持 <code>Default</code>，它就会越有用。</p>
+<p>许多Rust中的类型有一个构造器。然而，构造器是针对特定类型的。Rust不能抽象出一个代表所有带有<code>new()</code>方法的东西。为了实现这个想法，
+一个可被容器和其他泛型使用的<code>Default</code>特性应运而生（如 [<code>Option::unwrap_or_default()</code>）。尤其是一些容器已经在适当的情况下实现了它。</p>
+<p>单例容器如 <code>Cow</code>, <code>Box</code> 和 <code>Arc</code>为<code>Default</code>类型实现了<code>Default</code>，
+并且可以自动地对每个成员都实现<code>Default</code>的结构体支持<code>#[derive(Default)]</code>。所以越多的类型支持 <code>Default</code>，它就会越有用。</p>
 <p>另一方面，构造器能够接受多个参数，而<code>default()</code>方法不能。你甚至可以定义多个不同的函数做多个构造器，但是你最多只能为一个类型实现一种<code>Default</code>的实现。</p>
 <h2><a class="header" href="#例子" id="例子">例子</a></h2>
 <pre><pre class="playground"><code class="language-rust edition2018">use std::{path::PathBuf, time::Duration};

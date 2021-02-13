@@ -202,7 +202,8 @@ println!(&quot;{}&quot;, sum);
 <span class="boring">}
 </span></code></pre></pre>
 <p>哇哦！这真是不一样！这里发生了啥？记住声明式程序说明了做了什么，而不是如何去做。<code>fold</code>是一个 <a href="https://en.wikipedia.org/wiki/Function_composition">组合</a>函数的函数。这个名字来自于Haskell。</p>
-<p>这里，我们组合了在1到10范围内的加法函数（闭包<code>|a,b| a + b</code>）。<code>0</code>是起始点，所以<code>a</code>最开始是<code>0</code>，<code>b</code>是范围的第一个元素<code>1</code>。结果是<code>0 + 1 = 1</code>。所以现在我们再次<code>fold</code>，<code>a = 1</code>、<code>b = 2</code>下一个结果是<code>1 + 2 = 3</code>。这个过程一直持续到范围内最后一个元素<code>10</code>。</p>
+<p>这里，我们组合了在1到10范围内的加法函数（闭包<code>|a,b| a + b</code>）。<code>0</code>是起始点，所以<code>a</code>最开始是<code>0</code>，<code>b</code>是范围的第一个元素<code>1</code>。结果是
+<code>0 + 1 = 1</code>。所以现在我们再次<code>fold</code>，<code>a = 1</code>、<code>b = 2</code>下一个结果是<code>1 + 2 = 3</code>。这个过程一直持续到范围内最后一个元素<code>10</code>。</p>
 <table><thead><tr><th align="center"><code>a</code></th><th align="center"><code>b</code></th><th align="center">result</th></tr></thead><tbody>
 <tr><td align="center">0</td><td align="center">1</td><td align="center">1</td></tr>
 <tr><td align="center">1</td><td align="center">2</td><td align="center">3</td></tr>

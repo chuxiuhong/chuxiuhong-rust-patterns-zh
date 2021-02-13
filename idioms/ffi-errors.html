@@ -177,7 +177,7 @@
 <li>自定义错误类型应该被转换为C语言标准下的表示类型。</li>
 </ol>
 <h2><a class="header" href="#代码示例" id="代码示例">代码示例</a></h2>
-<h3><a class="header" href="#flat-enums" id="flat-enums">Flat Enums</a></h3>
+<h3><a class="header" href="#扁平枚举" id="扁平枚举">扁平枚举</a></h3>
 <pre><code class="language-rust ignore">enum DatabaseError {
     IsReadOnly = 1, // user attempted a write operation
     IOError = 2, // user should read the C errno() for what it was
@@ -190,7 +190,7 @@ impl From&lt;DatabaseError&gt; for libc::c_int {
     }
 }
 </code></pre>
-<h3><a class="header" href="#structured-enums" id="structured-enums">Structured Enums</a></h3>
+<h3><a class="header" href="#结构体枚举" id="结构体枚举">结构体枚举</a></h3>
 <pre><code class="language-rust ignore">pub mod errors {
     enum DatabaseError {
         IsReadOnly,
@@ -256,7 +256,7 @@ pub mod c_api {
     }
 }
 </code></pre>
-<h3><a class="header" href="#custom-error-types" id="custom-error-types">Custom Error Types</a></h3>
+<h3><a class="header" href="#自定义错误类型" id="自定义错误类型">自定义错误类型</a></h3>
 <pre><code class="language-rust ignore">struct ParseError {
     expected: char,
     line: u32,

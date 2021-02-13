@@ -228,7 +228,8 @@ fn swizzle(e: &amp;mut MultiVariateEnum) {
 </span></code></pre></pre>
 <h2><a class="header" href="#出发点" id="出发点">出发点</a></h2>
 <p>当使用枚举的时候，我们可能想要改变枚举变体类型为其他类型。为了通过借用检查器检查，我们将分为两个阶段。在第一阶段，我们查看现有的值然后决定下一步怎么做。第二阶段我们可以修改值。</p>
-<p>借用检查器不允许我们拿走<code>name</code>字段的值（因为那总得有有个东西放在那啊）。我们当然可以用<code>.clone()</code>克隆一个<code>name</code>的值，然后把这个克隆的值赋给<code>MyEnum::B</code>，不过这样就是一个反模式的实例（为了满足借用检查器就用克隆，增大了开销）。综上，我们可以通过仅仅一个可变借用来改变值，避免多余的空间申请。</p>
+<p>借用检查器不允许我们拿走<code>name</code>字段的值（因为那总得有有个东西放在那啊）。我们当然可以用<code>.clone()</code>克隆一个<code>name</code>的值，然后把这个克隆的值赋给<code>MyEnum::B</code>，
+不过这样就是一个反模式的实例（为了满足借用检查器就用克隆，增大了开销）。综上，我们可以通过仅仅一个可变借用来改变值，避免多余的空间申请。</p>
 <p><code>mem::take</code>支持我们交换值，用默认值替换，并且返回原值。对于<code>String</code>类型，默认值是一个空字符串，无需申请空间。因此，我们获取原来的<code>name</code>(作为一个拥有值的变量)，我们可以把它包装成另一个枚举。</p>
 <p>注：<code>mem:replace</code>非常相似，不过其允许我们指定要替换的值。可以用它实现<code>mem::take</code>的功能：<code>mem::replace(name,String::new())</code>。</p>
 <p>然而，如果我们要使用<code>Option</code>的默认值替换掉枚举变体的值，那么用<code>take()</code>方法还是更习惯和简便的。</p>

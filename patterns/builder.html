@@ -229,7 +229,8 @@ fn builder_test() {
 <p>与直接构造一个结构体或者一个简单的构造函数相比，这种方法太复杂。</p>
 <h2><a class="header" href="#讨论" id="讨论">讨论</a></h2>
 <p>因为Rust缺少重载功能，所以这种模式在Rust里比其他语言更常见。由于一个方法一个名称不能重载，所以Rust相比于C++、Java来说更不适合写很多构造器。</p>
-<p>这种模式经常不是为了作为构造器而设计。例如<a href="https://doc.rust-lang.org/std/process/struct.Command.html"><code>std::process::Command</code></a>是 <a href="https://doc.rust-lang.org/std/process/struct.Child.html"><code>Child</code></a>的构造器（一个进程）。这种情况下没有使用<code>T</code>和<code>TBuilder</code>命名模式。</p>
+<p>这种模式经常不是为了作为构造器而设计。例如<a href="https://doc.rust-lang.org/std/process/struct.Command.html"><code>std::process::Command</code></a>
+是 <a href="https://doc.rust-lang.org/std/process/struct.Child.html"><code>Child</code></a>的构造器（一个进程）。这种情况下没有使用<code>T</code>和<code>TBuilder</code>命名模式。</p>
 <p>下面的例子按值获取和返回。然而更符合人体工程学（以及更效率）的方法是按可变引用获取和返回。借用检查器将会帮助我们。传入传出可变引用将会让我们从下面这种代码：</p>
 <pre><code class="language-rust ignore">let mut fb = FooBuilder::new();
 fb.a();

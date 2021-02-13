@@ -205,7 +205,9 @@ borrow checker</p>
 <h1><a class="header" href="#以借用类型为参数" id="以借用类型为参数">以借用类型为参数</a></h1>
 <h2><a class="header" href="#说明" id="说明">说明</a></h2>
 <p>当你为函数选择参数类型时，使用带强制隐式转换的目标会增加你代码的复杂度。在这种情况下，函数将会接受更多的输入参数类型。</p>
-<p>使用可切片类型或者胖指针类型没有限制。事实上，你应该总是用借用类型（<strong>borrowed type</strong>）而不是自有数据类型的借用（<strong>borrowing the owned type</strong>）。例如<code>&amp;str</code> 而非 <code>&amp;String</code>, <code>&amp;[T]</code> 而非 <code>&amp;Vec&lt;T&gt;</code>, 或者 <code>&amp;T</code> 而非 <code>&amp;Box&lt;T&gt;</code>.</p>
+<p>使用可切片类型或者胖指针类型没有限制。事实上，你应该总是用借用类型（<strong>borrowed type</strong>）,
+而不是自有数据类型的借用（<strong>borrowing the owned type</strong>）。
+例如<code>&amp;str</code> 而非 <code>&amp;String</code>, <code>&amp;[T]</code> 而非 <code>&amp;Vec&lt;T&gt;</code>, 或者 <code>&amp;T</code> 而非 <code>&amp;Box&lt;T&gt;</code>.</p>
 <p>当自有数据结构（owned type）的实例已经提供了一个访问数据的间接层时，使用借用类型可以让你避免增加间接层。举例来说，<code>String</code>类型有一层间接层，所以<code>&amp;String</code>将有两个间接层。我们可以用<code>&amp;Str</code>来避免这种情况，无论何时调用函数，强制<code>&amp;String</code>转换为<code>&amp;Str</code>。</p>
 <h2><a class="header" href="#例子" id="例子">例子</a></h2>
 <p>在这个例子中，我们将说明使用<code>&amp;String</code>与<code>&amp;Str</code>作为函数参数的区别。这个思路用于对比<code>&amp;Vec&lt;T&gt;</code> 和 <code>&amp;[T]</code>、 <code>&amp;T</code>和<code>&amp;Box&lt;T&gt;</code>也适用。</p>
@@ -338,8 +340,10 @@ impl&lt;T&gt; Vec&lt;T&gt; {
 <p><a href="idioms/../patterns/builder.html">生成器模式</a>用于有多种构造对象方式的情况。</p>
 <h1><a class="header" href="#default-特性" id="default-特性"><code>Default</code> 特性</a></h1>
 <h2><a class="header" href="#说明-3" id="说明-3">说明</a></h2>
-<p>许多Rust中的类型有一个构造器。然而，构造器是针对特定类型的。Rust不能抽象出一个代表所有带有<code>new()</code>方法的东西。为了实现这个想法，一个可被容器和其他泛型使用的<code>Default</code>特性应运而生（如 [<code>Option::unwrap_or_default()</code>）。尤其是一些容器已经在适当的情况下实现了它。</p>
-<p>单例容器如 <code>Cow</code>, <code>Box</code> 和 <code>Arc</code>为<code>Default</code>类型实现了<code>Default</code>，并且可以自动地对每个成员都实现<code>Default</code>的结构体支持<code>#[derive(Default)]</code>。所以越多的类型支持 <code>Default</code>，它就会越有用。</p>
+<p>许多Rust中的类型有一个构造器。然而，构造器是针对特定类型的。Rust不能抽象出一个代表所有带有<code>new()</code>方法的东西。为了实现这个想法，
+一个可被容器和其他泛型使用的<code>Default</code>特性应运而生（如 [<code>Option::unwrap_or_default()</code>）。尤其是一些容器已经在适当的情况下实现了它。</p>
+<p>单例容器如 <code>Cow</code>, <code>Box</code> 和 <code>Arc</code>为<code>Default</code>类型实现了<code>Default</code>，
+并且可以自动地对每个成员都实现<code>Default</code>的结构体支持<code>#[derive(Default)]</code>。所以越多的类型支持 <code>Default</code>，它就会越有用。</p>
 <p>另一方面，构造器能够接受多个参数，而<code>default()</code>方法不能。你甚至可以定义多个不同的函数做多个构造器，但是你最多只能为一个类型实现一种<code>Default</code>的实现。</p>
 <h2><a class="header" href="#例子-3" id="例子-3">例子</a></h2>
 <pre><pre class="playground"><code class="language-rust edition2018">use std::{path::PathBuf, time::Duration};
@@ -407,7 +411,9 @@ impl&lt;T&gt; Deref for Vec&lt;T&gt; {
 <p>边界检查时，不考虑仅通过解引用可用的方法和特性，所以对泛型数据结构使用这种模式将会变得复杂。（请看 <code>Borrow</code>和<code>AsRef</code>特性）</p>
 <h2><a class="header" href="#讨论" id="讨论">讨论</a></h2>
 <p>智能指针和数据集合有相似之处：一个智能指针指向一个对象，一个集合指向许多个对象。从类型系统的角度来看二者有一点区别。一个数据集合拥有数据所有权，也负责删除数据。（包括共享数据所有权，一些借用可能是占用数据的）。一个数据集合如果拥有数据，那么通常来说会提供一个数据的借用方法以便多方使用数据。</p>
-<p>大多数智能指针（如 <code>Foo&lt;T&gt;</code>）实现了<code>Deref&lt;Target=T&gt;</code>特性。然而数据集合尝尝解引用为一个自定义类型。<code>[T]</code>和<code>str</code>类型有一些语言支持，但是通常情况下，这不是必要的。即使<code>Bar</code>时一个动态大小的类型时，<code>Foo&lt;T&gt;</code>也可以实现<code>Deref&lt;Target=Bar&lt;T&gt;&gt;</code>，并且<code>&amp;Bar&lt;T&gt;</code> 是借用<code>Foo&lt;T&gt;</code>类型数据。</p>
+<p>大多数智能指针（如 <code>Foo&lt;T&gt;</code>）实现了<code>Deref&lt;Target=T&gt;</code>特性。然而数据集合尝尝解引用为一个自定义类型。<code>[T]</code>和<code>str</code>类型有一些语言支持，
+但是通常情况下，这不是必要的。即使<code>Bar</code>时一个动态大小的类型时，<code>Foo&lt;T&gt;</code>也可以实现<code>Deref&lt;Target=Bar&lt;T&gt;&gt;</code>，
+并且<code>&amp;Bar&lt;T&gt;</code> 是借用<code>Foo&lt;T&gt;</code>类型数据。</p>
 <p>一般来讲，有序数据集合将会实现<code>Index</code> 和<code>Range</code>特性来提供切片语法。其将生成借用。</p>
 <h2><a class="header" href="#参阅-3" id="参阅-3">参阅</a></h2>
 <p><a href="idioms/../anti_patterns/deref.html">Deref polymorphism anti-pattern</a>.</p>
@@ -511,7 +517,8 @@ fn swizzle(e: &amp;mut MultiVariateEnum) {
 </span></code></pre></pre>
 <h2><a class="header" href="#出发点-2" id="出发点-2">出发点</a></h2>
 <p>当使用枚举的时候，我们可能想要改变枚举变体类型为其他类型。为了通过借用检查器检查，我们将分为两个阶段。在第一阶段，我们查看现有的值然后决定下一步怎么做。第二阶段我们可以修改值。</p>
-<p>借用检查器不允许我们拿走<code>name</code>字段的值（因为那总得有有个东西放在那啊）。我们当然可以用<code>.clone()</code>克隆一个<code>name</code>的值，然后把这个克隆的值赋给<code>MyEnum::B</code>，不过这样就是一个反模式的实例（为了满足借用检查器就用克隆，增大了开销）。综上，我们可以通过仅仅一个可变借用来改变值，避免多余的空间申请。</p>
+<p>借用检查器不允许我们拿走<code>name</code>字段的值（因为那总得有有个东西放在那啊）。我们当然可以用<code>.clone()</code>克隆一个<code>name</code>的值，然后把这个克隆的值赋给<code>MyEnum::B</code>，
+不过这样就是一个反模式的实例（为了满足借用检查器就用克隆，增大了开销）。综上，我们可以通过仅仅一个可变借用来改变值，避免多余的空间申请。</p>
 <p><code>mem::take</code>支持我们交换值，用默认值替换，并且返回原值。对于<code>String</code>类型，默认值是一个空字符串，无需申请空间。因此，我们获取原来的<code>name</code>(作为一个拥有值的变量)，我们可以把它包装成另一个枚举。</p>
 <p>注：<code>mem:replace</code>非常相似，不过其允许我们指定要替换的值。可以用它实现<code>mem::take</code>的功能：<code>mem::replace(name,String::new())</code>。</p>
 <p>然而，如果我们要使用<code>Option</code>的默认值替换掉枚举变体的值，那么用<code>take()</code>方法还是更习惯和简便的。</p>
@@ -589,15 +596,9 @@ optional reference.</li>
 不过，这有一些习惯用法可以使其像指针一样操作，并且避免缺少经验的开发者陷入<code>unsafe</code>Rust的陷阱。</p>
 <p>这一章中包括下列能在做FFI时有用的习惯用法：</p>
 <ol>
-<li>
-<p><a href="idioms/./ffi-errors.html">常见错误处理</a> - 使用整型代表错误类型以及哨兵返回值（sentinel）。</p>
-</li>
-<li>
-<p><a href="idioms/./ffi-accepting-strings.html">接受字符串</a> 同时使用最少的unsafe代码。</p>
-</li>
-<li>
-<p><a href="idioms/./ffi-passing-strings.html">传递字符串</a> 给FFI函数。</p>
-</li>
+<li><a href="idioms/./ffi-errors.html">常见错误处理</a> - 使用整型代表错误类型以及哨兵返回值（sentinel）。</li>
+<li><a href="idioms/./ffi-accepting-strings.html">接受字符串</a> 同时使用最少的unsafe代码。</li>
+<li><a href="idioms/./ffi-passing-strings.html">传递字符串</a> 给FFI函数。</li>
 </ol>
 <h1><a class="header" href="#ffi中的错误处理" id="ffi中的错误处理">FFI中的错误处理</a></h1>
 <h2><a class="header" href="#说明-8" id="说明-8">说明</a></h2>
@@ -609,7 +610,7 @@ optional reference.</li>
 <li>自定义错误类型应该被转换为C语言标准下的表示类型。</li>
 </ol>
 <h2><a class="header" href="#代码示例-1" id="代码示例-1">代码示例</a></h2>
-<h3><a class="header" href="#flat-enums" id="flat-enums">Flat Enums</a></h3>
+<h3><a class="header" href="#扁平枚举" id="扁平枚举">扁平枚举</a></h3>
 <pre><code class="language-rust ignore">enum DatabaseError {
     IsReadOnly = 1, // user attempted a write operation
     IOError = 2, // user should read the C errno() for what it was
@@ -622,7 +623,7 @@ impl From&lt;DatabaseError&gt; for libc::c_int {
     }
 }
 </code></pre>
-<h3><a class="header" href="#structured-enums" id="structured-enums">Structured Enums</a></h3>
+<h3><a class="header" href="#结构体枚举" id="结构体枚举">结构体枚举</a></h3>
 <pre><code class="language-rust ignore">pub mod errors {
     enum DatabaseError {
         IsReadOnly,
@@ -688,7 +689,7 @@ pub mod c_api {
     }
 }
 </code></pre>
-<h3><a class="header" href="#custom-error-types" id="custom-error-types">Custom Error Types</a></h3>
+<h3><a class="header" href="#自定义错误类型" id="自定义错误类型">自定义错误类型</a></h3>
 <pre><code class="language-rust ignore">struct ParseError {
     expected: char,
     line: u32,
@@ -863,7 +864,7 @@ impl From&lt;ParseError&gt; for parse_error {
 <h2><a class="header" href="#优点-7" id="优点-7">优点</a></h2>
 <p>样例能保证下面三点：</p>
 <ol>
-<li>unsafe`代码块尽可能的小。</li>
+<li><code>unsafe</code>代码块尽可能的小。</li>
 <li><code>CString</code>生命周期足够长</li>
 <li>类型转换时发生的错误能够尽早地传播出来。</li>
 </ol>
@@ -1167,7 +1168,8 @@ fn builder_test() {
 <p>与直接构造一个结构体或者一个简单的构造函数相比，这种方法太复杂。</p>
 <h2><a class="header" href="#讨论-6" id="讨论-6">讨论</a></h2>
 <p>因为Rust缺少重载功能，所以这种模式在Rust里比其他语言更常见。由于一个方法一个名称不能重载，所以Rust相比于C++、Java来说更不适合写很多构造器。</p>
-<p>这种模式经常不是为了作为构造器而设计。例如<a href="https://doc.rust-lang.org/std/process/struct.Command.html"><code>std::process::Command</code></a>是 <a href="https://doc.rust-lang.org/std/process/struct.Child.html"><code>Child</code></a>的构造器（一个进程）。这种情况下没有使用<code>T</code>和<code>TBuilder</code>命名模式。</p>
+<p>这种模式经常不是为了作为构造器而设计。例如<a href="https://doc.rust-lang.org/std/process/struct.Command.html"><code>std::process::Command</code></a>
+是 <a href="https://doc.rust-lang.org/std/process/struct.Child.html"><code>Child</code></a>的构造器（一个进程）。这种情况下没有使用<code>T</code>和<code>TBuilder</code>命名模式。</p>
 <p>下面的例子按值获取和返回。然而更符合人体工程学（以及更效率）的方法是按可变引用获取和返回。借用检查器将会帮助我们。传入传出可变引用将会让我们从下面这种代码：</p>
 <pre><code class="language-rust ignore">let mut fb = FooBuilder::new();
 fb.a();
@@ -1512,7 +1514,9 @@ impl MySetWrapper {
 </code></pre>
 <p>当函数调用时迭代器已经存在，我们将违背Rust的一个别名规则。根据Rust的规则，在这段代码中的可变引用必须独占。如果迭代器已经存在，它就不是独占的，所以我们会有<code>未定义行为</code>！<sup class="footnote-reference"><a href="#1">1</a></sup></p>
 <p>为了避免这种情况的发生，我们必须有一种确保可变引用独占的方法。这基本相当于当迭代器存在时清除迭代器的共享引用，然后重新创建它。在绝大多数情况下，这还是比C语言版本的效率更低。</p>
-<p>一些人可能会问：C语言是如何高效地处理这种情况的？答案是：它作弊。Rust的别名规则是一个问题，但C语言直接用指针完全忽略这个问题。作为交换，常常能看见一些代码在手册中被声明在某些或所有情况下为非线程安全的。事实上，<a href="https://manpages.debian.org/buster/manpages/attributes.7.en.html">GNU C library</a> 有专门研究并发行为的全部词典。</p>
+<p>一些人可能会问：C语言是如何高效地处理这种情况的？答案是：它作弊。Rust的别名规则是一个问题，但C语言直接用指针完全忽略这个问题。作为交换，
+常常能看见一些代码在手册中被声明在某些或所有情况下为非线程安全的。事实上，<a href="https://manpages.debian.org/buster/manpages/attributes.7.en.html">GNU C library</a>
+有专门研究并发行为的全部词典。</p>
 <p>Rust总是使内存中的一切安全，能同时获得C语言中无法兼得的安全性和性能。被拒绝使用某些捷径是Rust的开发者必须付出的代价。</p>
 <div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
 <p>对于那些正在绞尽脑汁的C程序员来说，在这段代码中不需要读取迭代器，因为是未定义行为。排他性规则还支持编译器优化，这可能会导致由于迭代器的共享引用产生不一致的观察结果。（例如栈溢出或者重新排序指令以提高效率）。这些情况将可能在可变引用创建后的任何时间发生。</p>
@@ -1596,7 +1600,8 @@ impl Folder for Renamer {
 <li>解决问题实例的解释器</li>
 </ul>
 <h2><a class="header" href="#出发点-12" id="出发点-12">出发点</a></h2>
-<p>我们的目标是转换简单的数学表达式为后缀表达式。（<a href="https://en.wikipedia.org/wiki/Reverse_Polish_notation">逆波兰表达式</a>）。为简单起见，表达式包含十个数字<code>0</code>,...<code>9</code>和<code>+</code>,<code>-</code>两种操作。举例来说，<code>2 + 4</code>被翻译为<code>2 4 +</code>。</p>
+<p>我们的目标是转换简单的数学表达式为后缀表达式。（<a href="https://en.wikipedia.org/wiki/Reverse_Polish_notation">逆波兰表达式</a>）。
+为简单起见，表达式包含十个数字<code>0</code>,...<code>9</code>和<code>+</code>,<code>-</code>两种操作。举例来说，<code>2 + 4</code>被翻译为<code>2 4 +</code>。</p>
 <h2><a class="header" href="#问题的上下文无关文法" id="问题的上下文无关文法">问题的上下文无关文法</a></h2>
 <p>我们的任务是将中缀表达式转为后缀表达式。我们对包含<code>0</code>,...<code>9</code>和<code>+</code>,<code>-</code>的中缀表达式定义上下文无关文法包括：</p>
 <ul>
@@ -2256,7 +2261,8 @@ println!(&quot;{}&quot;, sum);
 <span class="boring">}
 </span></code></pre></pre>
 <p>哇哦！这真是不一样！这里发生了啥？记住声明式程序说明了做了什么，而不是如何去做。<code>fold</code>是一个 <a href="https://en.wikipedia.org/wiki/Function_composition">组合</a>函数的函数。这个名字来自于Haskell。</p>
-<p>这里，我们组合了在1到10范围内的加法函数（闭包<code>|a,b| a + b</code>）。<code>0</code>是起始点，所以<code>a</code>最开始是<code>0</code>，<code>b</code>是范围的第一个元素<code>1</code>。结果是<code>0 + 1 = 1</code>。所以现在我们再次<code>fold</code>，<code>a = 1</code>、<code>b = 2</code>下一个结果是<code>1 + 2 = 3</code>。这个过程一直持续到范围内最后一个元素<code>10</code>。</p>
+<p>这里，我们组合了在1到10范围内的加法函数（闭包<code>|a,b| a + b</code>）。<code>0</code>是起始点，所以<code>a</code>最开始是<code>0</code>，<code>b</code>是范围的第一个元素<code>1</code>。结果是
+<code>0 + 1 = 1</code>。所以现在我们再次<code>fold</code>，<code>a = 1</code>、<code>b = 2</code>下一个结果是<code>1 + 2 = 3</code>。这个过程一直持续到范围内最后一个元素<code>10</code>。</p>
 <table><thead><tr><th align="center"><code>a</code></th><th align="center"><code>b</code></th><th align="center">result</th></tr></thead><tbody>
 <tr><td align="center">0</td><td align="center">1</td><td align="center">1</td></tr>
 <tr><td align="center">1</td><td align="center">2</td><td align="center">3</td></tr>
