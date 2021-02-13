@@ -174,7 +174,7 @@
 <p>本项目源自<a href="https://github.com/rust-unofficial/patterns">rust-unofficial/patterns</a>，遵守原项目的MPL-2.0协议。
 本着学习Rust的过程中也为Rust在国内的推广做一点微小的贡献的想法，来动手翻译该书。我尽量保持在不改专业术语的情况下更口语化些，不希望翻译的太过僵硬，希望读者理解，水平有限，翻译错漏之处还请指出。</p>
 <h2><a class="header" href="#参加我们" id="参加我们">参加我们</a></h2>
-<p>如果你有兴趣参加这本书的编写，请查看<a href="https://github.com/rust-unofficial/patterns/blob/master/CONTRIBUTING.md">contribution guidelines</a>.</p>
+<p>如果你有兴趣参加这本书的编写，请查看<a href="https://github.com/rust-unofficial/patterns/blob/master/CONTRIBUTING.md">contribution guidelines</a>。</p>
 <h2><a class="header" href="#设计模式" id="设计模式">设计模式</a></h2>
 <p>在开发程序的时候，我们必须要解决很多问题。
 一个程序就相当于一个问题的解决方案。
@@ -400,7 +400,8 @@ impl&lt;T&gt; Deref for Vec&lt;T&gt; {
     }
 }
 </code></pre>
-<p>一个<code>Vec&lt;T&gt;</code>是一些 <code>T</code>类型的所有权的集合，一个<code>&amp;[T]</code>切片借用了一部分<code>T</code>。为<code>Vec</code>类型实现<code>Deref</code>特性使其可以隐式的从 <code>&amp;Vec&lt;T&gt;</code>转为<code>&amp;[T]</code> ，并且也包括自动解引用的关系搜索。<code>Vec</code>类型大多数方法也对切片适用。</p>
+<p>一个<code>Vec&lt;T&gt;</code>是一些 <code>T</code>类型的所有权的集合，一个<code>&amp;[T]</code>切片借用了一部分<code>T</code>。为<code>Vec</code>类型实现<code>Deref</code>特性使其可以隐式的
+从 <code>&amp;Vec&lt;T&gt;</code>转为<code>&amp;[T]</code> ，并且也包括自动解引用的关系搜索。<code>Vec</code>类型大多数方法也对切片适用。</p>
 <p>See also <code>String</code> and <code>&amp;str</code>.</p>
 <h2><a class="header" href="#出发点" id="出发点">出发点</a></h2>
 <p>所有权和借用是Rust语言的核心概念。数据结构必须对这些语法的使用负责才能给用户一个良好的体验。当实现一个拥有数据的数据结构时，提供一个数据借用的接口将带来更大的灵活性。</p>
@@ -442,7 +443,9 @@ impl&lt;T&gt; Deref for Vec&lt;T&gt; {
 }
 </code></pre>
 <h2><a class="header" href="#出发点-1" id="出发点-1">出发点</a></h2>
-<p>如果一个函数有多个返回语句，那么在退出时执行析构代码将会是困难且重复的（并且容易产生bug）。使用宏来隐式地退出是一个例外。一个常见的用法是使用<code>?</code>操作符，当结果是<code>Ok</code>的时候继续，当结果是<code>Err</code>的时候返回。<code>?</code>操作符是用来处理异常的一个机制，但是并不像Java的<code>finally</code>，这里不支持在正常情况和异常情况下都执行的代码。发生恐慌（Panicking）也将提前结束函数。</p>
+<p>如果一个函数有多个返回语句，那么在退出时执行析构代码将会是困难且重复的（并且容易产生bug）。使用宏来隐式地退出是一个例外。一个常见的用法是使用<code>?</code>操作符，
+当结果是<code>Ok</code>的时候继续，当结果是<code>Err</code>的时候返回。<code>?</code>操作符是用来处理异常的一个机制，但是并不像Java的<code>finally</code>，
+这里不支持在正常情况和异常情况下都执行的代码。发生恐慌（Panicking）也将提前结束函数。</p>
 <h2><a class="header" href="#优点-2" id="优点-2">优点</a></h2>
 <p>在析构器里的代码退出前总是会被执行，能应对恐慌（panics），提前返回等等。</p>
 <h2><a class="header" href="#缺点-2" id="缺点-2">缺点</a></h2>
@@ -450,9 +453,13 @@ impl&lt;T&gt; Deref for Vec&lt;T&gt; {
 <p>这种模式介绍了一些难以注意的隐式代码，即函数在结束时没有显式给出析构器执行代码。因此导致debug的时候更加棘手。</p>
 <p>为了确定性，申请一个对象和实现<code>Drop</code>特性增加了很多样板代码。</p>
 <h2><a class="header" href="#讨论-1" id="讨论-1">讨论</a></h2>
-<p>下面是一些关于如何用对象做终结器（finaliser）的精妙之处。对象在函数结束前必须保持存活，然后就被销毁。这个对象必须是一个值或者独占数据的指针（例如：<code>Box&lt;Foo&gt;</code>）。如果使用一个共享指针（例如<code>Rc</code>），那么终结器的生命周期就比函数更长了。类似地，终结器不应该被转移所有权到他处或者被返回。</p>
-<p>终结器必须绑定在变量上，否则当退出临时的作用域时它就会被销毁。如果变量仅用作终结器，变量的名字必须用<code>_</code>开头，否则编译器就会警告这个变量未使用。然而，不要直接用<code>_</code>作为变量名称，这样的话将会立刻销毁这个变量。</p>
-<p>在Rust中，析构器在对象离开作用域的时候执行。无论是到达代码块的末端、提前返回亦或是函数恐慌(panic)都属于这种情况。当恐慌发生时，Rust对每个栈帧中的每个对象执行析构器代码。所以析构器即使在函数调用内出现恐慌也能顺利执行。</p>
+<p>下面是一些关于如何用对象做终结器（finaliser）的精妙之处。对象在函数结束前必须保持存活，然后就被销毁。
+这个对象必须是一个值或者独占数据的指针（例如：<code>Box&lt;Foo&gt;</code>）。如果使用一个共享指针（例如<code>Rc</code>），
+那么终结器的生命周期就比函数更长了。类似地，终结器不应该被转移所有权到他处或者被返回。</p>
+<p>终结器必须绑定在变量上，否则当退出临时的作用域时它就会被销毁。如果变量仅用作终结器，变量的名字必须用<code>_</code>开头，
+否则编译器就会警告这个变量未使用。然而，不要直接用<code>_</code>作为变量名称，这样的话将会立刻销毁这个变量。</p>
+<p>在Rust中，析构器在对象离开作用域的时候执行。无论是到达代码块的末端、提前返回亦或是函数恐慌(panic)都属于这种情况。当恐慌发生时，
+Rust对每个栈帧中的每个对象执行析构器代码。所以析构器即使在函数调用内出现恐慌也能顺利执行。</p>
 <p>如果一个析构器在析构时出现了恐慌，这就没啥好办法了，所以Rust不再执行析构，果断终止这个线程。这就意味着Rust并不是绝对保证析构器一定会执行，因此可能会导致资源泄露。</p>
 <h2><a class="header" href="#参阅-4" id="参阅-4">参阅</a></h2>
 <p><a href="idioms/../patterns/RAII.html">RAII</a>.</p>
@@ -917,7 +924,7 @@ for logician in logicians.iter().chain(turing.iter()) {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>注意如果这个<code>Option</code>总是非空的，那么用<a href="https://doc.rust-lang.org/std/iter/fn.once.html"><code>std::iter::once</code></a> 更加合适。</p>
+<p>注意如果这个<code>Option</code>总是非空的，那么用<a href="https://doc.rust-lang.org/std/iter/fn.once.html"><code>std::iter::once</code></a>更加合适。</p>
 <p>此外，因为<code>Option</code>实现了<code>IntoIterator</code>特性，它就可以用<code>for</code>循环来迭代。这等价于用<code>if let Some(..)</code>，大多数情况下倾向于用后者。</p>
 <h2><a class="header" href="#参阅-7" id="参阅-7">参阅</a></h2>
 <ul>
@@ -1002,9 +1009,12 @@ fn main(s: a::S) {
 
 </code></pre>
 <h2><a class="header" href="#讨论-4" id="讨论-4">讨论</a></h2>
-<p>向结构体中增加字段通常是保持向后兼容的。然而，如果调用者用模式匹配来解构这个结构体的实例，他可能对现有结构体内的所有公开字段进行修改，这样就破坏了我们的设计。或者调用者可以对一部分字段赋值，然后在模式里用<code>..</code>来自动增加其他可匹配的字段。使用私有字段至少强迫调用者必须用后一种方法，确保结构体是未来是可以扩展的。</p>
+<p>向结构体中增加字段通常是保持向后兼容的。然而，如果调用者用模式匹配来解构这个结构体的实例，他可能对现有结构体内的所有公开字段进行修改，
+这样就破坏了我们的设计。或者调用者可以对一部分字段赋值，然后在模式里用<code>..</code>来自动增加其他可匹配的字段。
+使用私有字段至少强迫调用者必须用后一种方法，确保结构体是未来是可以扩展的。</p>
 <p>这种实现的缺点是你可能需要增加用不到的变量。你可以用<code>()</code>基类型来确保不增加运行时开销，<code>_</code>作为字段名可以避免没使用变量的编译器警告。</p>
-<p>如果Rust支持枚举的私有成员，我们就可以用相同的技巧来对一个枚举增加新的成员。但是不用通配符而是穷尽的模式匹配会导致未实现的问题。私有成员会强迫调用者在模式匹配是加上<code>_</code>通配符。这个问题的常规解决方法是加上<code>#[non_exhaustive]</code>属性。</p>
+<p>如果Rust支持枚举的私有成员，我们就可以用相同的技巧来对一个枚举增加新的成员。
+但是不用通配符而是穷尽的模式匹配会导致未实现的问题。私有成员会强迫调用者在模式匹配是加上<code>_</code>通配符。这个问题的常规解决方法是加上<code>#[non_exhaustive]</code>属性。</p>
 <h1><a class="header" href="#关于初始化的文档" id="关于初始化的文档">关于初始化的文档</a></h1>
 <h2><a class="header" href="#说明-14" id="说明-14">说明</a></h2>
 <p>如果一个结构体初始化操作很复杂，当写文档的时候，可以在文档中写一个使用样例的函数。</p>
@@ -1581,7 +1591,8 @@ impl Folder for Renamer {
 <p>通过对数据结构中的每个节点执行一些操作来映射一个数据结构是常见的。对于简单结构上的简单操作，可以用<code>Iterator::map</code>来实现。对于更复杂的操作，或者前面的节点会影响后面节点的操作，或者数据结构上的循环是非平凡的，用fold模式更为妥帖。</p>
 <p>类似访问者模式，fold模式允许我们将数据结构的遍历与对每个节点执行的操作分开。</p>
 <h2><a class="header" href="#讨论-9" id="讨论-9">讨论</a></h2>
-<p>采用这种方式映射数据结构在函数式语言中很常见。在面向对象语言中，更常见的是就地修改数据结构。Rust中常见的是&quot;函数式&quot;的方法，主要是因为引用的不可变性。采用新生成数据结构而不是修改原来的结构，使在大多数情况下对代码推理更容易。</p>
+<p>采用这种方式映射数据结构在函数式语言中很常见。在面向对象语言中，更常见的是就地修改数据结构。Rust中常见的是&quot;函数式&quot;的方法，主要是因为引用的不可变性。
+采用新生成数据结构而不是修改原来的结构，使在大多数情况下对代码推理更容易。</p>
 <p>效率和可重用性之间的权衡可以通过改变<code>fold_*</code>方法对节点的接受方式来调整。</p>
 <p>在上面的例子里我们通过<code>Box</code>指针来操作。因为独占数据，原始的数据结构不能再被使用。另一方面如果一个节点不再修改，重用它将会更高效。</p>
 <p>如果我们对借用的引用进行操作，原来的数据结构就能被重用。不过一个节点哪怕没修改也必须克隆才能保证独占。</p>
@@ -1615,7 +1626,8 @@ exp -&gt; exp - term
 exp -&gt; term
 term -&gt; 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 </code></pre>
-<p>这个语法应该根据我们要用它做什么来进一步转换。举例来说，我们也许需要消除左递归。更多细节请看<a href="https://en.wikipedia.org/wiki/Compilers:_Principles,_Techniques,_and_Tools">Compilers: Principles,Techniques, and Tools</a></p>
+<p>这个语法应该根据我们要用它做什么来进一步转换。举例来说，我们也许需要消除左递归。
+更多细节请看<a href="https://en.wikipedia.org/wiki/Compilers:_Principles,_Techniques,_and_Tools">Compilers: Principles,Techniques, and Tools</a></p>
 <h2><a class="header" href="#解决方案" id="解决方案">解决方案</a></h2>
 <p>我们只需实现一个递归下降解析器。为了简单起见，当表达式语法错误时，代码会恐慌。（例如根据语法定义，<code>2-34</code>或者<code>2+5-</code>是错误的）</p>
 <pre><pre class="playground"><code class="language-rust edition2018">pub struct Interpreter&lt;'a&gt; {
@@ -2088,7 +2100,7 @@ impl Visitor&lt;i64&gt; for Interpreter {
 <p><a href="https://en.wikipedia.org/wiki/Visitor_pattern">访问者模式</a></p>
 <p><a href="patterns/fold.html">fold</a>模式与访问者模式很相似，区别在于生成了被访问数据结构的新版本。</p>
 <h1><a class="header" href="#反模式" id="反模式">反模式</a></h1>
-<p><a href="https://en.wikipedia.org/wiki/Anti-pattern">反模式</a>是一种解决经常出现的问题的方案，但其通常是无效的并且风险颇高、适得其反。就像知道如何解决问题一样有价值的是知道不去解决它。反模式为我们提供了与设计模式相关的反例。反模式并不局限与代码。例如，进程也可以是一种反模式。</p>
+<p><a href="https://en.wikipedia.org/wiki/Anti-pattern">反模式</a>是一种解决经常出现的问题的方案，但其通常是无效的并且风险颇高、适得其反。就像知道如何解决问题一样有价值的是知道不去解决它。反模式为我们提供了与设计模式相关的反例。反模式并不局限与代码。例如，进程也可以是一种反模式.</p>
 <h1><a class="header" href="#denywarnings" id="denywarnings"><code>#![deny(warnings)]</code></a></h1>
 <h2><a class="header" href="#说明-29" id="说明-29">说明</a></h2>
 <p>一个善意的库作者想要确保他们的代码在编译时不会产生警告。因此他们在库里标注以下内容：</p>
@@ -2211,7 +2223,10 @@ fn main() {
 <p>使用这种模式，就<code>self</code>而言，给出了与大多数面向对象语言截然不同的语义。通常它仍是子类型的引用，在这种模式下它将是定义方法的“类”。</p>
 <p>最后，这种模式仅支持单继承，并且没有接口的概念、基于类的隐私性或者其他的与继承相关的特性。因此，对于习惯于Java那种继承的程序员来说，它提供了一种“惊喜”。</p>
 <h2><a class="header" href="#讨论-15" id="讨论-15">讨论</a></h2>
-<p>这没有好的替代方案。根据具体情况，最好用特性重新实现，或者手动编写分发给<code>Foo</code>的方法。我们确实打算为Rust添加一种像这样的继承机制，但是可能需要一段时间才能进入稳定版本的Rust。看这些 <a href="http://aturon.github.io/blog/2015/09/18/reuse/">博客</a>、<a href="http://smallcultfollowing.com/babysteps/blog/2015/10/08/virtual-structs-part-4-extended-enums-and-thin-traits/">文章</a> 和这个<a href="https://github.com/rust-lang/rfcs/issues/349">RFC issue</a> 来了解更多细节。</p>
+<p>这没有好的替代方案。根据具体情况，最好用特性重新实现，或者手动编写分发给<code>Foo</code>的方法。我们确实打算为Rust添加一种像这样的继承机制，
+但是可能需要一段时间才能进入稳定版本的Rust。看这些 <a href="http://aturon.github.io/blog/2015/09/18/reuse/">博客</a>、
+<a href="http://smallcultfollowing.com/babysteps/blog/2015/10/08/virtual-structs-part-4-extended-enums-and-thin-traits/">文章</a>
+和这个<a href="https://github.com/rust-lang/rfcs/issues/349">RFC issue</a> 来了解更多细节。</p>
 <p><code>Deref</code>特性是被设计用来实现自定义指针类型的。它的用处是将<code>T</code>的引用转变为<code>T</code>的值，而不是在类型间转换。遗憾的是，这不是（或者说无法）靠特性定义来强制执行。</p>
 <p>Rust尝试在显式和隐式机制之间做出权衡，更偏向于类型间进行显式转换。点运算符自动解引用是出于符合人体工程学的角度做的隐式设计，其目的仅限于有限的间接程度，而不是任意类型之间做隐式转换。</p>
 <h2><a class="header" href="#参阅-16" id="参阅-16">参阅</a></h2>
@@ -2222,7 +2237,7 @@ or <a href="https://crates.io/crates/ambassador">ambassador</a></li>
 <li><a href="https://doc.rust-lang.org/std/ops/trait.Deref.html">Documentation for <code>Deref</code> trait</a>.</li>
 </ul>
 <h1><a class="header" href="#rust中函数式用法" id="rust中函数式用法">Rust中函数式用法</a></h1>
-<p>Rust是一种命令式语言，但是它也遵循很多<a href="https://en.wikipedia.org/wiki/Functional_programming">函数式语言</a> 的范式。</p>
+<p>Rust是一种命令式语言，但是它也遵循很多<a href="https://en.wikipedia.org/wiki/Functional_programming">函数式语言</a>的范式。</p>
 <blockquote>
 <p>在计算机科学中，函数式编程是一种通过应用和组合函数来编程的一种范式。它是一种声明式编程范式，其中函数的定义是每个表达式返回一个值的表达式树，而不是一系列改变程序状态的命令语句。</p>
 </blockquote>

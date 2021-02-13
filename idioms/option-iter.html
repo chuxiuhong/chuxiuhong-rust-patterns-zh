@@ -198,7 +198,7 @@ for logician in logicians.iter().chain(turing.iter()) {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>注意如果这个<code>Option</code>总是非空的，那么用<a href="https://doc.rust-lang.org/std/iter/fn.once.html"><code>std::iter::once</code></a> 更加合适。</p>
+<p>注意如果这个<code>Option</code>总是非空的，那么用<a href="https://doc.rust-lang.org/std/iter/fn.once.html"><code>std::iter::once</code></a>更加合适。</p>
 <p>此外，因为<code>Option</code>实现了<code>IntoIterator</code>特性，它就可以用<code>for</code>循环来迭代。这等价于用<code>if let Some(..)</code>，大多数情况下倾向于用后者。</p>
 <h2><a class="header" href="#参阅" id="参阅">参阅</a></h2>
 <ul>

@@ -227,7 +227,10 @@ fn main() {
 <p>使用这种模式，就<code>self</code>而言，给出了与大多数面向对象语言截然不同的语义。通常它仍是子类型的引用，在这种模式下它将是定义方法的“类”。</p>
 <p>最后，这种模式仅支持单继承，并且没有接口的概念、基于类的隐私性或者其他的与继承相关的特性。因此，对于习惯于Java那种继承的程序员来说，它提供了一种“惊喜”。</p>
 <h2><a class="header" href="#讨论" id="讨论">讨论</a></h2>
-<p>这没有好的替代方案。根据具体情况，最好用特性重新实现，或者手动编写分发给<code>Foo</code>的方法。我们确实打算为Rust添加一种像这样的继承机制，但是可能需要一段时间才能进入稳定版本的Rust。看这些 <a href="http://aturon.github.io/blog/2015/09/18/reuse/">博客</a>、<a href="http://smallcultfollowing.com/babysteps/blog/2015/10/08/virtual-structs-part-4-extended-enums-and-thin-traits/">文章</a> 和这个<a href="https://github.com/rust-lang/rfcs/issues/349">RFC issue</a> 来了解更多细节。</p>
+<p>这没有好的替代方案。根据具体情况，最好用特性重新实现，或者手动编写分发给<code>Foo</code>的方法。我们确实打算为Rust添加一种像这样的继承机制，
+但是可能需要一段时间才能进入稳定版本的Rust。看这些 <a href="http://aturon.github.io/blog/2015/09/18/reuse/">博客</a>、
+<a href="http://smallcultfollowing.com/babysteps/blog/2015/10/08/virtual-structs-part-4-extended-enums-and-thin-traits/">文章</a>
+和这个<a href="https://github.com/rust-lang/rfcs/issues/349">RFC issue</a> 来了解更多细节。</p>
 <p><code>Deref</code>特性是被设计用来实现自定义指针类型的。它的用处是将<code>T</code>的引用转变为<code>T</code>的值，而不是在类型间转换。遗憾的是，这不是（或者说无法）靠特性定义来强制执行。</p>
 <p>Rust尝试在显式和隐式机制之间做出权衡，更偏向于类型间进行显式转换。点运算符自动解引用是出于符合人体工程学的角度做的隐式设计，其目的仅限于有限的间接程度，而不是任意类型之间做隐式转换。</p>
 <h2><a class="header" href="#参阅" id="参阅">参阅</a></h2>

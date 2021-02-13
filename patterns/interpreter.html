@@ -192,7 +192,8 @@ exp -&gt; exp - term
 exp -&gt; term
 term -&gt; 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 </code></pre>
-<p>这个语法应该根据我们要用它做什么来进一步转换。举例来说，我们也许需要消除左递归。更多细节请看<a href="https://en.wikipedia.org/wiki/Compilers:_Principles,_Techniques,_and_Tools">Compilers: Principles,Techniques, and Tools</a></p>
+<p>这个语法应该根据我们要用它做什么来进一步转换。举例来说，我们也许需要消除左递归。
+更多细节请看<a href="https://en.wikipedia.org/wiki/Compilers:_Principles,_Techniques,_and_Tools">Compilers: Principles,Techniques, and Tools</a></p>
 <h2><a class="header" href="#解决方案" id="解决方案">解决方案</a></h2>
 <p>我们只需实现一个递归下降解析器。为了简单起见，当表达式语法错误时，代码会恐慌。（例如根据语法定义，<code>2-34</code>或者<code>2+5-</code>是错误的）</p>
 <pre><pre class="playground"><code class="language-rust edition2018">pub struct Interpreter&lt;'a&gt; {

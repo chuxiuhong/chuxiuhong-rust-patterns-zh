@@ -186,7 +186,8 @@ impl&lt;T&gt; Deref for Vec&lt;T&gt; {
     }
 }
 </code></pre>
-<p>一个<code>Vec&lt;T&gt;</code>是一些 <code>T</code>类型的所有权的集合，一个<code>&amp;[T]</code>切片借用了一部分<code>T</code>。为<code>Vec</code>类型实现<code>Deref</code>特性使其可以隐式的从 <code>&amp;Vec&lt;T&gt;</code>转为<code>&amp;[T]</code> ，并且也包括自动解引用的关系搜索。<code>Vec</code>类型大多数方法也对切片适用。</p>
+<p>一个<code>Vec&lt;T&gt;</code>是一些 <code>T</code>类型的所有权的集合，一个<code>&amp;[T]</code>切片借用了一部分<code>T</code>。为<code>Vec</code>类型实现<code>Deref</code>特性使其可以隐式的
+从 <code>&amp;Vec&lt;T&gt;</code>转为<code>&amp;[T]</code> ，并且也包括自动解引用的关系搜索。<code>Vec</code>类型大多数方法也对切片适用。</p>
 <p>See also <code>String</code> and <code>&amp;str</code>.</p>
 <h2><a class="header" href="#出发点" id="出发点">出发点</a></h2>
 <p>所有权和借用是Rust语言的核心概念。数据结构必须对这些语法的使用负责才能给用户一个良好的体验。当实现一个拥有数据的数据结构时，提供一个数据借用的接口将带来更大的灵活性。</p>
