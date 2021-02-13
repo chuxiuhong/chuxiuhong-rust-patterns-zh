@@ -66,8 +66,6 @@ impl Visitor<i64> for Interpreter {
 
 ## 出发点
 
-
-
 当你想要讲一个算法用于不同数据的时候，访问器模式是很有用的。如果数据是相同种类的，你可以用一个类似迭代器模式。使用访问者对象（而不是函数式的方法）支持访问者带有状态，从而在节点之间传递信息。
 
 ## 讨论
@@ -90,8 +88,6 @@ pub fn walk_expr(visitor: &mut Visitor, e: &Expr) {
 }
 ```
 
-
-
 在其他语言中（例如Java）通常是数据提供一个`accept`方法来履行同样的职责。
 
 ## 参阅
@@ -101,4 +97,3 @@ pub fn walk_expr(visitor: &mut Visitor, e: &Expr) {
 [访问者模式](https://en.wikipedia.org/wiki/Visitor_pattern)
 
 [fold](fold.md)模式与访问者模式很相似，区别在于生成了被访问数据结构的新版本。
-

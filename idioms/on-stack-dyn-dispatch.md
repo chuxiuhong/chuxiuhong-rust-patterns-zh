@@ -2,7 +2,6 @@
 
 ## 说明
 
-
 我们可以动态分发多个值，然而为了实现此功能，需要声明多个变量来绑定不同类型的对象。我们可以使用延迟条件初始化（deferred conditional initialization）来扩展生命周期，如下所示：
 
 ## 例子
@@ -34,19 +33,18 @@ let readable: &mut dyn io::Read = if arg == "-" {
 
 ## 出发点
 
-
 Rust默认是单态的代码。这就意味着对每个类型都要生成相对应的代码并且单独优化。这种模式虽然在热路径（hot path）上执行的很快，但是它空间上将非常臃肿。当性能不是致命关键的时候，我们还是要考虑考虑编译时间和cache的使用。
 
 幸运的是，Rust允许我们使用动态分发，但是我们需要显式的声明。
 
 ## 优点
 
-
 我们不用在堆上申请任何空间。既不用初始化任何用不上的东西，也不用单态化全部代码，便可同时支持`File`和`Stdin`。
 
 ## 缺点
 
 这样写代码比使用`Box`实现的版本需要更多活动部件（moving parts）：
+
 ```rust,ignore
 // We still need to ascribe the type for dynamic dispatch.
 let readable: Box<dyn io::Read> = if arg == "-" {

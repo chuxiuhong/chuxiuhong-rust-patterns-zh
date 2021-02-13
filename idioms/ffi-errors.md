@@ -12,7 +12,7 @@
 
 ## 代码示例
 
-### Flat Enums
+### 扁平枚举
 
 ```rust,ignore
 enum DatabaseError {
@@ -28,7 +28,7 @@ impl From<DatabaseError> for libc::c_int {
 }
 ```
 
-### Structured Enums
+### 结构体枚举
 
 ```rust,ignore
 pub mod errors {
@@ -97,7 +97,7 @@ pub mod c_api {
 }
 ```
 
-### Custom Error Types
+### 自定义错误类型
 
 ```rust,ignore
 struct ParseError {

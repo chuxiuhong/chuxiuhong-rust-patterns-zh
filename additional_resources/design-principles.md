@@ -1,6 +1,7 @@
 # 设计原则
 
 ## 常见设计原则概述
+
 ---
 
 ## [SOLID](https://en.wikipedia.org/wiki/SOLID)
@@ -39,8 +40,6 @@
 ## [命令查询分离原则Command-Query-Separation(CQS)](https://en.wikipedia.org/wiki/Command%E2%80%93query_separation)
 
 函数不应该产生抽象的副作用，只允许命令（过程）产生副作用——Bertrand Meyer:《面向对象软件构造》
-
-
 
 ## [最小惊奇原则Principle of least astonishment (POLA)](https://en.wikipedia.org/wiki/Principle_of_least_astonishment)
 

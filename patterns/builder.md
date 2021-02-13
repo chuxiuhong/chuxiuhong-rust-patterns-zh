@@ -72,9 +72,8 @@ fn builder_test() {
 
 因为Rust缺少重载功能，所以这种模式在Rust里比其他语言更常见。由于一个方法一个名称不能重载，所以Rust相比于C++、Java来说更不适合写很多构造器。
 
-
-这种模式经常不是为了作为构造器而设计。例如[`std::process::Command`](https://doc.rust-lang.org/std/process/struct.Command.html)是 [`Child`](https://doc.rust-lang.org/std/process/struct.Child.html)的构造器（一个进程）。这种情况下没有使用`T`和`TBuilder`命名模式。
-
+这种模式经常不是为了作为构造器而设计。例如[`std::process::Command`](https://doc.rust-lang.org/std/process/struct.Command.html)
+是 [`Child`](https://doc.rust-lang.org/std/process/struct.Child.html)的构造器（一个进程）。这种情况下没有使用`T`和`TBuilder`命名模式。
 
 下面的例子按值获取和返回。然而更符合人体工程学（以及更效率）的方法是按可变引用获取和返回。借用检查器将会帮助我们。传入传出可变引用将会让我们从下面这种代码：
 

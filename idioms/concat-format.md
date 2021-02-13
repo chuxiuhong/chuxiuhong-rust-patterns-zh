@@ -20,6 +20,7 @@ fn say_hello(name: &str) -> String {
 ```
 
 ## 优点
+
 使用`format!` 连接字符串通常更加简洁和易于阅读。
 
 ## 缺点
