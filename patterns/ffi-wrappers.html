@@ -1,0 +1,328 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js rust">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>类型合并封装 - Rust设计模式</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="A catalogue of Rust design patterns, anti-patterns and idioms">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "rust";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('rust')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../intro.html"><strong aria-hidden="true">1.</strong> 引言</a></li><li class="chapter-item expanded "><a href="../idioms/index.html"><strong aria-hidden="true">2.</strong> 习惯用法</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../idioms/coercion-arguments.html"><strong aria-hidden="true">2.1.</strong> 以借用类型为参数</a></li><li class="chapter-item expanded "><a href="../idioms/concat-format.html"><strong aria-hidden="true">2.2.</strong> 用format!连接字符串</a></li><li class="chapter-item expanded "><a href="../idioms/ctor.html"><strong aria-hidden="true">2.3.</strong> 构造器</a></li><li class="chapter-item expanded "><a href="../idioms/default.html"><strong aria-hidden="true">2.4.</strong> Default 特性</a></li><li class="chapter-item expanded "><a href="../idioms/deref.html"><strong aria-hidden="true">2.5.</strong> 将集合视为智能指针</a></li><li class="chapter-item expanded "><a href="../idioms/dtor-finally.html"><strong aria-hidden="true">2.6.</strong> 确定性析构</a></li><li class="chapter-item expanded "><a href="../idioms/mem-replace.html"><strong aria-hidden="true">2.7.</strong> mem::{take(), replace()}</a></li><li class="chapter-item expanded "><a href="../idioms/on-stack-dyn-dispatch.html"><strong aria-hidden="true">2.8.</strong> 栈上动态分发</a></li><li class="chapter-item expanded "><a href="../idioms/ffi-intro.html"><strong aria-hidden="true">2.9.</strong> 外部语言接口</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../idioms/ffi-errors.html"><strong aria-hidden="true">2.9.1.</strong> 常见错误处理</a></li><li class="chapter-item expanded "><a href="../idioms/ffi-accepting-strings.html"><strong aria-hidden="true">2.9.2.</strong> 接受字符串</a></li><li class="chapter-item expanded "><a href="../idioms/ffi-passing-strings.html"><strong aria-hidden="true">2.9.3.</strong> 传递字符串</a></li></ol></li><li class="chapter-item expanded "><a href="../idioms/option-iter.html"><strong aria-hidden="true">2.10.</strong> 关于 Option的迭代器</a></li><li class="chapter-item expanded "><a href="../idioms/pass-var-to-closure.html"><strong aria-hidden="true">2.11.</strong> 向闭包传递变量</a></li><li class="chapter-item expanded "><a href="../idioms/priv-extend.html"><strong aria-hidden="true">2.12.</strong> 留隐私，为扩展</a></li><li class="chapter-item expanded "><a href="../idioms/rustdoc-init.html"><strong aria-hidden="true">2.13.</strong> 关于初始化的文档</a></li><li class="chapter-item expanded "><a href="../idioms/temporary-mutability.html"><strong aria-hidden="true">2.14.</strong> 临时可变性</a></li></ol></li><li class="chapter-item expanded "><a href="../patterns/index.html"><strong aria-hidden="true">3.</strong> 设计模式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../patterns/builder.html"><strong aria-hidden="true">3.1.</strong> 生成器</a></li><li class="chapter-item expanded "><a href="../patterns/compose-structs.html"><strong aria-hidden="true">3.2.</strong> 分解结构体</a></li><li class="chapter-item expanded "><a href="../patterns/entry.html"><strong aria-hidden="true">3.3.</strong> Entry API</a></li><li class="chapter-item expanded "><a href="../patterns/ffi-intro.html"><strong aria-hidden="true">3.4.</strong> 外部语言接口使用</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../patterns/ffi-export.html"><strong aria-hidden="true">3.4.1.</strong> 基于对象的API</a></li><li class="chapter-item expanded "><a href="../patterns/ffi-wrappers.html" class="active"><strong aria-hidden="true">3.4.2.</strong> 类型合并封装</a></li></ol></li><li class="chapter-item expanded "><a href="../patterns/fold.html"><strong aria-hidden="true">3.5.</strong> Fold</a></li><li class="chapter-item expanded "><a href="../patterns/interpreter.html"><strong aria-hidden="true">3.6.</strong> 解释器</a></li><li class="chapter-item expanded "><a href="../patterns/newtype.html"><strong aria-hidden="true">3.7.</strong> 新类型</a></li><li class="chapter-item expanded "><a href="../patterns/RAII.html"><strong aria-hidden="true">3.8.</strong> RAII 守卫</a></li><li class="chapter-item expanded "><a href="../patterns/small-crates.html"><strong aria-hidden="true">3.9.</strong> 偏爱更小的库</a></li><li class="chapter-item expanded "><a href="../patterns/strategy.html"><strong aria-hidden="true">3.10.</strong> 策略模式</a></li><li class="chapter-item expanded "><a href="../patterns/unsafe-mods.html"><strong aria-hidden="true">3.11.</strong> 将不安全置于小模块中</a></li><li class="chapter-item expanded "><a href="../patterns/visitor.html"><strong aria-hidden="true">3.12.</strong> 访问者模式</a></li></ol></li><li class="chapter-item expanded "><a href="../anti_patterns/index.html"><strong aria-hidden="true">4.</strong> 反模式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../anti_patterns/deny-warnings.html"><strong aria-hidden="true">4.1.</strong> #[deny(warnings)]</a></li><li class="chapter-item expanded "><a href="../anti_patterns/deref.html"><strong aria-hidden="true">4.2.</strong> Deref 多态</a></li></ol></li><li class="chapter-item expanded "><a href="../functional/index.html"><strong aria-hidden="true">5.</strong> 函数式编程</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../functional/paradigms.html"><strong aria-hidden="true">5.1.</strong> 编程范式</a></li></ol></li><li class="chapter-item expanded "><a href="../additional_resources/index.html"><strong aria-hidden="true">6.</strong> 补充材料</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../additional_resources/design-principles.html"><strong aria-hidden="true">6.1.</strong> 设计原则</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust设计模式</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-unofficial/patterns" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#类型合并封装" id="类型合并封装">类型合并封装</a></h1>
+<h2><a class="header" href="#说明" id="说明">说明</a></h2>
+<p>这个模式是被设计用来在最小化内存不安全代码区域的情况下，支持优雅地处理多种相关类型。</p>
+<p>Rust的别名规则的基石之一就是生命周期。其确保了多种在类型间的访问模式是内存安全的，也包括安全的数据竞争。</p>
+<p>不过当Rust 的类型导出到其他语言时，通常转换为指针。在Rust中，指针相当于“用户管理指针指向对象的生命周期”。谁使用谁负责避免内存不安全的情况。</p>
+<p>因此需要对用户代码有一定程度的信任，特别是在释放内存之后，Rust对此无能为力。不过，一些API设计相比于其他设计来说，对另一种语言编写的代码造成更大的负担。</p>
+<p>风险最小的API设计是“合并包装器”，所有可能的互动都合并到一个“包装器类型”中，保持Rust的API干净。</p>
+<h2><a class="header" href="#代码示例" id="代码示例">代码示例</a></h2>
+<p>为了便于理解，让我们看看一个经典的API导出的例子：在集合中循环访问。</p>
+<p>API看起来像这样:</p>
+<ol>
+<li>迭代器用<code>first_key</code>初始化。</li>
+<li>每次调用<code>next_key</code>将会递增迭代器。</li>
+<li>Calls to <code>next_key</code> if the iterator is at the end will do nothing.</li>
+<li>当迭代器到尾时，调用<code>next_key</code>将什么都不做。</li>
+<li>像前面所说，迭代器将会被包装进集合中（不像Rust的原生API）</li>
+</ol>
+<p>如果迭代器高效实现了<code>nth()</code>，就可以实现对每个函数调用都是很快的：</p>
+<pre><code class="language-rust ignore">struct MySetWrapper {
+    myset: MySet,
+    iter_next: usize,
+}
+
+impl MySetWrapper {
+    pub fn first_key(&amp;mut self) -&gt; Option&lt;&amp;Key&gt; {
+        self.iter_next = 0;
+        self.next_key()
+    }
+    pub fn next_key(&amp;mut self) -&gt; Option&lt;&amp;Key&gt; {
+        if let Some(next) = self.myset.keys().nth(self.iter_next) {
+            self.iter_next += 1;
+            Some(next)
+        } else {
+            None
+        }
+    }
+}
+</code></pre>
+<p>因此，包装器实现简单并且不包含任何<code>unsafe</code>代码。</p>
+<h2><a class="header" href="#优点" id="优点">优点</a></h2>
+<p>这使得API使用起来更安全，避免了在类型间交互时的生命周期问题。关于更多的优点和避免的陷阱请看 <a href="./ffi-export.html">基于对象的API</a>。</p>
+<h2><a class="header" href="#缺点" id="缺点">缺点</a></h2>
+<p>包装类型常常是困难的，并且有时Rust的API做出妥协将会使事情更容易。</p>
+<p>举例来说，想想一个没有高效实现<code>nth()</code>的迭代器。它肯定需要写特殊的逻辑来保证对象处理循环全在内部，或者单独支持一个不同的访问模式仅用来做外部语言访问。</p>
+<h3><a class="header" href="#尝试包装迭代器-并且失败了" id="尝试包装迭代器-并且失败了">尝试包装迭代器 (并且失败了)</a></h3>
+<p>为了正确地包装类型，包装器将会实现C语言版本的代码要做的事：擦除迭代器的生命周期，手动管理其生命周期。</p>
+<p>简单地说，这是离谱的难。</p>
+<p>下面仅仅是其中一个陷阱的说明。</p>
+<p><code>MySetWrapper</code>的第一个版本像下面这样：</p>
+<pre><code class="language-rust ignore">struct MySetWrapper {
+    myset: MySet,
+    iter_next: usize,
+    // created from a transmuted Box&lt;KeysIter + 'self&gt;
+    iterator: Option&lt;NonNull&lt;KeysIter&lt;'static&gt;&gt;&gt;,
+}
+</code></pre>
+<p>用<code>transmute</code>来延长生命周期，然后用一个指针来隐藏它，这就够丑陋的。不过它还有更坏的：任何其他的操作将会导致Rust的<code>未定义行为</code>(undefined behavior)。</p>
+<p>在包装器内的<code>MySet</code>将会被其他函数在循环时操控，例如存储一个重复的新值。而API无法阻止这一点，并且事实上一些相似的C语言库也预期如此。</p>
+<p>一个<code>myset_store</code> 的简单实现如下：</p>
+<pre><code class="language-rust ignore">pub mod unsafe_module {
+
+    // other module content
+
+    pub fn myset_store(
+        myset: *mut MySetWrapper,
+        key: datum,
+        value: datum) -&gt; libc::c_int {
+
+        // DO NOT USE THIS CODE. IT IS UNSAFE TO DEMONSTRATE A PROLBEM.
+
+        let myset: &amp;mut MySet = unsafe { // SAFETY: whoops, UB occurs in here!
+            &amp;mut (*myset).myset
+        };
+
+        /* ...check and cast key and value data... */
+
+        match myset.store(casted_key, casted_value) {
+            Ok(_) =&gt; 0,
+            Err(e) =&gt; e.into()
+        }
+    }
+}
+</code></pre>
+<p>当函数调用时迭代器已经存在，我们将违背Rust的一个别名规则。根据Rust的规则，在这段代码中的可变引用必须独占。如果迭代器已经存在，它就不是独占的，所以我们会有<code>未定义行为</code>！<sup class="footnote-reference"><a href="#1">1</a></sup></p>
+<p>为了避免这种情况的发生，我们必须有一种确保可变引用独占的方法。这基本相当于当迭代器存在时清除迭代器的共享引用，然后重新创建它。在绝大多数情况下，这还是比C语言版本的效率更低。</p>
+<p>一些人可能会问：C语言是如何高效地处理这种情况的？答案是：它作弊。Rust的别名规则是一个问题，但C语言直接用指针完全忽略这个问题。作为交换，常常能看见一些代码在手册中被声明在某些或所有情况下为非线程安全的。事实上，<a href="https://manpages.debian.org/buster/manpages/attributes.7.en.html">GNU C library</a> 有专门研究并发行为的全部词典。</p>
+<p>Rust总是使内存中的一切安全，能同时获得C语言中无法兼得的安全性和性能。被拒绝使用某些捷径是Rust的开发者必须付出的代价。</p>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>对于那些正在绞尽脑汁的C程序员来说，在这段代码中不需要读取迭代器，因为是未定义行为。排他性规则还支持编译器优化，这可能会导致由于迭代器的共享引用产生不一致的观察结果。（例如栈溢出或者重新排序指令以提高效率）。这些情况将可能在可变引用创建后的任何时间发生。</p>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../patterns/ffi-export.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../patterns/fold.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../patterns/ffi-export.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../patterns/fold.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
