@@ -80,10 +80,12 @@ impl Bar {
 
 ## 讨论
 
-这没有好的替代方案。根据具体情况，最好用特性重新实现，或者手动编写分发给`Foo`的方法。我们确实打算为Rust添加一种像这样的继承机制，但是可能需要一段时间才能进入稳定版本的Rust。看这些 [博客](http://aturon.github.io/blog/2015/09/18/reuse/)、[文章](http://smallcultfollowing.com/babysteps/blog/2015/10/08/virtual-structs-part-4-extended-enums-and-thin-traits/) 和这个[RFC issue](https://github.com/rust-lang/rfcs/issues/349) 来了解更多细节。
+这没有好的替代方案。根据具体情况，最好用特性重新实现，或者手动编写分发给`Foo`的方法。我们确实打算为Rust添加一种像这样的继承机制，
+但是可能需要一段时间才能进入稳定版本的Rust。看这些 [博客](http://aturon.github.io/blog/2015/09/18/reuse/)、
+[文章](http://smallcultfollowing.com/babysteps/blog/2015/10/08/virtual-structs-part-4-extended-enums-and-thin-traits/)
+和这个[RFC issue](https://github.com/rust-lang/rfcs/issues/349) 来了解更多细节。
 
 `Deref`特性是被设计用来实现自定义指针类型的。它的用处是将`T`的引用转变为`T`的值，而不是在类型间转换。遗憾的是，这不是（或者说无法）靠特性定义来强制执行。
-
 
 Rust尝试在显式和隐式机制之间做出权衡，更偏向于类型间进行显式转换。点运算符自动解引用是出于符合人体工程学的角度做的隐式设计，其目的仅限于有限的间接程度，而不是任意类型之间做隐式转换。
 

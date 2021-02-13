@@ -31,7 +31,7 @@ for logician in logicians.iter().chain(turing.iter()) {
 }
 ```
 
-注意如果这个`Option`总是非空的，那么用[`std::iter::once`](https://doc.rust-lang.org/std/iter/fn.once.html) 更加合适。
+注意如果这个`Option`总是非空的，那么用[`std::iter::once`](https://doc.rust-lang.org/std/iter/fn.once.html)更加合适。
 
 此外，因为`Option`实现了`IntoIterator`特性，它就可以用`for`循环来迭代。这等价于用`if let Some(..)`，大多数情况下倾向于用后者。
 

@@ -31,7 +31,8 @@ exp -> term
 term -> 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 ```
 
-这个语法应该根据我们要用它做什么来进一步转换。举例来说，我们也许需要消除左递归。更多细节请看[Compilers: Principles,Techniques, and Tools](https://en.wikipedia.org/wiki/Compilers:_Principles,_Techniques,_and_Tools)
+这个语法应该根据我们要用它做什么来进一步转换。举例来说，我们也许需要消除左递归。
+更多细节请看[Compilers: Principles,Techniques, and Tools](https://en.wikipedia.org/wiki/Compilers:_Principles,_Techniques,_and_Tools)
 
 ## 解决方案
 
