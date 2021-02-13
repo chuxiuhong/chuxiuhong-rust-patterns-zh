@@ -2,7 +2,7 @@
 title = "Rust设计模式"
 authors = ["the rust-unofficial authors"]
 description = "A catalogue of Rust design patterns, anti-patterns and idioms"
-language = "zh-cn"
+language = "en"
 multilingual = false
 src = "."
 
