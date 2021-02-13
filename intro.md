@@ -1,0 +1,28 @@
+# 引言
+
+##  译者注
+本项目源自[rust-unofficial/patterns](https://github.com/rust-unofficial/patterns)，遵守原项目的MPL-2.0协议。
+本着学习Rust的过程中也为Rust在国内的推广做一点微小的贡献的想法，来动手翻译该书。我尽量保持在不改专业术语的情况下更口语化些，不希望翻译的太过僵硬，希望读者理解，水平有限，翻译错漏之处还请指出。
+
+## 参加我们
+
+如果你有兴趣参加这本书的编写，请查看[contribution guidelines](https://github.com/rust-unofficial/patterns/blob/master/CONTRIBUTING.md).
+## 设计模式
+
+在开发程序的时候，我们必须要解决很多问题。
+一个程序就相当于一个问题的解决方案。
+设计模式就相当于一个用来解决很多不同问题的解决方案的集合。
+我们将所有这些解决方案集合在一起去解决更大的问题。
+
+## Rust中的设计模式
+
+有很多问题有相同的形式。
+因为Rust不是面向对象的语言，所以设计模式与其他面向对象语言的设计模式也有所不同。
+虽然细节上有所不同，但他们还是有很多相同之处：
+- [设计模式](./patterns/index.md) 是编写软件过程中解决常见问题的方法。
+- [反模式](./anti_patterns/index.md) 是解决常见问题的方法。
+  然而设计模式带给我们好处，反模式却带来更多的问题。
+- [习惯用法](./idioms/index.md) 是编码的指导方针。它是社区的共同规范。除非你有明确的理由，      否则就遵守它。
+
+TODO: Mention why Rust is a bit special - functional elements, type system,
+borrow checker
