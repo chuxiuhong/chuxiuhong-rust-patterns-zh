@@ -169,7 +169,7 @@
                     <main>
                         <h1><a class="header" href="#deref-多态" id="deref-多态"><code>Deref</code> 多态</a></h1>
 <h2><a class="header" href="#说明" id="说明">说明</a></h2>
-<p>滥用<code>Deref</code>特性来模拟结构体之间的继承，从而重用方法。</p>
+<p>滥用<code>Deref</code>特性，模拟结构体之间的继承，从而重用方法。</p>
 <h2><a class="header" href="#代码示例" id="代码示例">代码示例</a></h2>
 <p>有时我们想要从诸如Java之类的面向对象语言中模拟以下常见模式：</p>
 <pre><code class="language-java">class Foo {
@@ -196,7 +196,7 @@ impl Foo {
 }
 
 struct Bar {
-    f: Foo
+    f: Foo,
 }
 
 impl Deref for Bar {
@@ -207,7 +207,7 @@ impl Deref for Bar {
 }
 
 fn main() {
-    let b = Bar { Foo {} };
+    let b = Bar { f: Foo {} };
     b.m();
 }
 </code></pre>

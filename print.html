@@ -1130,6 +1130,14 @@ pub struct Foo {
     bar: String,
 }
 
+impl Foo {
+    // This method will help users to discover the builder
+    pub fn builder() -&gt; FooBuilder {
+        FooBuilder::default()
+    }
+}
+
+#[derive(Default)]
 pub struct FooBuilder {
     // Probably lots of optional fields.
     bar: String,
@@ -1882,15 +1890,17 @@ fn baz(x: Mutex&lt;Foo&gt;) {
 <h2><a class="header" href="#代码示例-9" id="代码示例-9">代码示例</a></h2>
 <p>在这个例子中我们的不变量（或者说抽象）是<code>Context</code>,<code>Formatter</code>和<code>Report</code>，同时<code>Text</code>和<code>Json</code>是我们的策略结构体。这些策略都要实现<code>Formatter</code>特性。</p>
 <pre><pre class="playground"><code class="language-rust edition2018">use std::collections::HashMap;
+
 type Data = HashMap&lt;String, u32&gt;;
 
 trait Formatter {
-    fn format(&amp;self, data: &amp;Data, s: &amp;mut String);
+    fn format(&amp;self, data: &amp;Data, buf: &amp;mut String);
 }
 
 struct Report;
 
 impl Report {
+    // Write should be used but we kept it as String to ignore error handling
     fn generate&lt;T: Formatter&gt;(g: T, s: &amp;mut String) {
         // backend operations...
         let mut data = HashMap::new();
@@ -1903,29 +1913,25 @@ impl Report {
 
 struct Text;
 impl Formatter for Text {
-    fn format(&amp;self, data: &amp;Data, s: &amp;mut String) {
-        *s = data
-            .iter()
-            .map(|(key, val)| format!(&quot;{} {}\n&quot;, key, val))
-            .collect();
+    fn format(&amp;self, data: &amp;Data, buf: &amp;mut String) {
+        for (k, v) in data {
+            let entry = format!(&quot;{} {}\n&quot;, k, v);
+            buf.push_str(&amp;entry);
+        }
     }
 }
 
 struct Json;
 impl Formatter for Json {
-    fn format(&amp;self, data: &amp;Data, s: &amp;mut String) {
-        *s = String::from(&quot;[&quot;);
-        let mut iter = data.into_iter();
-        if let Some((key, val)) = iter.next() {
-            let entry = format!(r#&quot;{{&quot;{}&quot;:&quot;{}&quot;}}&quot;#, key, val);
-            s.push_str(&amp;entry);
-            while let Some((key, val)) = iter.next() {
-                s.push(',');
-                let entry = format!(r#&quot;{{&quot;{}&quot;:&quot;{}&quot;}}&quot;#, key, val);
-                s.push_str(&amp;entry);
-            }
+    fn format(&amp;self, data: &amp;Data, buf: &amp;mut String) {
+        buf.push('[');
+        for (k, v) in data.into_iter() {
+            let entry = format!(r#&quot;{{&quot;{}&quot;:&quot;{}&quot;}}&quot;#, k, v);
+            buf.push_str(&amp;entry);
+            buf.push(',');
         }
-        s.push(']');
+        buf.pop(); // remove extra , at the end
+        buf.push(']');
     }
 }
 
@@ -1935,6 +1941,7 @@ fn main() {
     assert!(s.contains(&quot;one 1&quot;));
     assert!(s.contains(&quot;two 2&quot;));
 
+    s.clear(); // reuse the same buffer
     Report::generate(Json, &amp;mut s);
     assert!(s.contains(r#&quot;{&quot;one&quot;:&quot;1&quot;}&quot;#));
     assert!(s.contains(r#&quot;{&quot;two&quot;:&quot;2&quot;}&quot;#));
@@ -2167,7 +2174,7 @@ impl Visitor&lt;i64&gt; for Interpreter {
 </ul>
 <h1><a class="header" href="#deref-多态" id="deref-多态"><code>Deref</code> 多态</a></h1>
 <h2><a class="header" href="#说明-30" id="说明-30">说明</a></h2>
-<p>滥用<code>Deref</code>特性来模拟结构体之间的继承，从而重用方法。</p>
+<p>滥用<code>Deref</code>特性，模拟结构体之间的继承，从而重用方法。</p>
 <h2><a class="header" href="#代码示例-11" id="代码示例-11">代码示例</a></h2>
 <p>有时我们想要从诸如Java之类的面向对象语言中模拟以下常见模式：</p>
 <pre><code class="language-java">class Foo {
@@ -2194,7 +2201,7 @@ impl Foo {
 }
 
 struct Bar {
-    f: Foo
+    f: Foo,
 }
 
 impl Deref for Bar {
@@ -2205,7 +2212,7 @@ impl Deref for Bar {
 }
 
 fn main() {
-    let b = Bar { Foo {} };
+    let b = Bar { f: Foo {} };
     b.m();
 }
 </code></pre>
