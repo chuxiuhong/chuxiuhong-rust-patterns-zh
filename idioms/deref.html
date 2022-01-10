@@ -198,7 +198,7 @@ impl&lt;T&gt; Deref for Vec&lt;T&gt; {
 <p>边界检查时，不考虑仅通过解引用可用的方法和特性，所以对泛型数据结构使用这种模式将会变得复杂。（请看 <code>Borrow</code>和<code>AsRef</code>特性）</p>
 <h2><a class="header" href="#讨论" id="讨论">讨论</a></h2>
 <p>智能指针和数据集合有相似之处：一个智能指针指向一个对象，一个集合指向许多个对象。从类型系统的角度来看二者有一点区别。一个数据集合拥有数据所有权，也负责删除数据。（包括共享数据所有权，一些借用可能是占用数据的）。一个数据集合如果拥有数据，那么通常来说会提供一个数据的借用方法以便多方使用数据。</p>
-<p>大多数智能指针（如 <code>Foo&lt;T&gt;</code>）实现了<code>Deref&lt;Target=T&gt;</code>特性。然而数据集合尝尝解引用为一个自定义类型。<code>[T]</code>和<code>str</code>类型有一些语言支持，
+<p>大多数智能指针（如 <code>Foo&lt;T&gt;</code>）实现了<code>Deref&lt;Target=T&gt;</code>特性。然而数据集合常常解引用为一个自定义类型。<code>[T]</code>和<code>str</code>类型有一些语言支持，
 但是通常情况下，这不是必要的。即使<code>Bar</code>时一个动态大小的类型时，<code>Foo&lt;T&gt;</code>也可以实现<code>Deref&lt;Target=Bar&lt;T&gt;&gt;</code>，
 并且<code>&amp;Bar&lt;T&gt;</code> 是借用<code>Foo&lt;T&gt;</code>类型数据。</p>
 <p>一般来讲，有序数据集合将会实现<code>Index</code> 和<code>Range</code>特性来提供切片语法。其将生成借用。</p>

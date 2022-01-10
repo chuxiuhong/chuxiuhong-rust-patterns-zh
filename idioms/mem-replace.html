@@ -237,7 +237,7 @@ fn swizzle(e: &amp;mut MultiVariateEnum) {
 <h2><a class="header" href="#优点" id="优点">优点</a></h2>
 <p>看好啦，没有内存申请！同时你在这么做的时候会感觉自己像Indiana Jones。（译者注：没看过夺宝奇兵，没get到梗）</p>
 <h2><a class="header" href="#缺点" id="缺点">缺点</a></h2>
-<p>这会变得优点啰嗦。如果错误地重复这个操作将会让你厌恶借用检查器。编译器将无法对替换操作优化，结果是让你觉得相比其他不安全的语言来说性能更低。</p>
+<p>这会变得有点啰嗦。如果错误地重复这个操作将会让你厌恶借用检查器。编译器将无法对替换操作优化，结果是让你觉得相比其他不安全的语言来说性能更低。</p>
 <p>此外，<code>take</code>操作需要类型实现<a href="./default.html"><code>Default</code></a>特性。然而，如果这个类型没有实现<code>Default</code>特性，你还是可以用 <code>mem::replace</code>。</p>
 <h2><a class="header" href="#讨论" id="讨论">讨论</a></h2>
 <p>这个模式是只属于Rust的特点。在带GC的语言中，你可以直接用引用来替换。（GC会记录有哪些引用），在像C语言这些低级语言中你可以简单地给指针取个别名然后解决问题。</p>
