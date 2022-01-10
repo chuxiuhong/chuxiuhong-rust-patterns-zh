@@ -2,7 +2,7 @@
 
 ## 说明
 
-滥用`Deref`特性来模拟结构体之间的继承，从而重用方法。
+滥用`Deref`特性，模拟结构体之间的继承，从而重用方法。
 
 ## 代码示例
 
@@ -36,7 +36,7 @@ impl Foo {
 }
 
 struct Bar {
-    f: Foo
+    f: Foo,
 }
 
 impl Deref for Bar {
@@ -47,7 +47,7 @@ impl Deref for Bar {
 }
 
 fn main() {
-    let b = Bar { Foo {} };
+    let b = Bar { f: Foo {} };
     b.m();
 }
 ```
