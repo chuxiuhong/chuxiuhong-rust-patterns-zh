@@ -21,6 +21,7 @@
   - [临时可变性](./idioms/temporary-mutability.md)
 
 - [设计模式](./patterns/index.md)
+  - [命令模式](./patterns/command.md)
   - [生成器](./patterns/builder.md)
   - [分解结构体](./patterns/compose-structs.md)
   - [Entry API](./patterns/entry.md)
