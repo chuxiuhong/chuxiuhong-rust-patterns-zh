@@ -21,9 +21,9 @@
   - [临时可变性](./idioms/temporary-mutability.md)
 
 - [设计模式](./patterns/index.md)
-  - [命令模式](./patterns/command.md)
-  - [生成器](./patterns/builder.md)
-  - [分解结构体](./patterns/compose-structs.md)
+  - [命令模式](./patterns/behavioural/command.md)
+  - [生成器](./patterns/creational/builder.md)
+  - [分解结构体](./patterns/Structural/compose-structs.md)
   - [外部语言接口使用](./patterns/ffi/ffi-intro.md)
     - [基于对象的API](./patterns/ffi/ffi-export.md)
     - [类型合并封装](./patterns/ffi/ffi-wrappers.md)
