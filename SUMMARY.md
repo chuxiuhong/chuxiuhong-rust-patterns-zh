@@ -37,6 +37,7 @@
   - [访问者模式](./patterns/visitor.md)
 
 - [反模式](./anti_patterns/index.md)
+  - [clone过借用检查](./anti_patterns/borrow_clone.md)
   - [`#[deny(warnings)]`](./anti_patterns/deny-warnings.md)
   - [Deref 多态](./anti_patterns/deref.md)
 
