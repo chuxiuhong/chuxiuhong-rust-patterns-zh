@@ -13,7 +13,6 @@ let mut x = 5;
 // 借用 `x`（先clone）
 let y = &mut (x.clone());
 
-// without the x.clone() two lines prior, this line would fail on compile as x has been borrowed
 // 由于 x.clone(), x 并未被借用, 这行代码可以运行。
 println!("{}", x);
 
@@ -25,7 +24,7 @@ println!("{}", x);
 
 用这种模式来解决借用检查令人困惑的问题是很诱人的，特别是对于初学者来说。然而，这有严重的后果。使用`.clone()`会导致数据被复制。两者之间的任何变化都不会同步——因为会有两个完全独立的变量存在。
 
-有种特殊情况—— `Rc<T>` 被设计为智能处理<code>clone</code>。它在内部确切管理着一份数据的副本，clone它只会clone引用。
+有种特殊情况—— `Rc<T>` 被设计为智能处理 `clone` 。它在内部确切管理着一份数据的副本，clone它只会clone引用。
 
 还有`Arc<T>`，它提供堆分配类型T的共享所有权。对`Arc`调用`.clone()`会得到新的`Arc`实例，它指向和源`Arc`相同的栈分配，增加引用计数。
 
