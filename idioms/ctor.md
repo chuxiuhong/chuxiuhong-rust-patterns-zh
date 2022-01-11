@@ -30,4 +30,4 @@ impl<T> Vec<T> {
 
 ## 参阅
 
-[生成器模式](../patterns/builder.md)用于有多种构造对象方式的情况。
+[生成器模式](../patterns/creational/builder.md)用于有多种构造对象方式的情况。

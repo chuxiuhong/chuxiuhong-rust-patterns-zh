@@ -5,6 +5,6 @@
 
 这一章中包括下列能在做FFI时有用的习惯用法：
 
-1. [常见错误处理](./ffi-errors.md) - 使用整型代表错误类型以及哨兵返回值（sentinel）。
-2. [接受字符串](./ffi-accepting-strings.md) 同时使用最少的unsafe代码。
-3. [传递字符串](./ffi-passing-strings.md) 给FFI函数。
+1. [常见错误处理](ffi-errors.md) - 使用整型代表错误类型以及哨兵返回值（sentinel）。
+2. [接受字符串](ffi-accepting-strings.md) 同时使用最少的unsafe代码。
+3. [传递字符串](ffi-passing-strings.md) 给FFI函数。

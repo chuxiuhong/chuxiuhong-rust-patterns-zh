@@ -68,7 +68,7 @@ let readable: Box<dyn io::Read> = if arg == "-" {
 ## 参阅
 
 * [Finalisation in destructors](dtor-finally.md) and
-[RAII guards](../patterns/RAII.md) can benefit from tight control over lifetimes.
+[RAII guards](../patterns/behavioural/RAII.md) can benefit from tight control over lifetimes.
 * For conditionally filled `Option<&T>`s of (mutable) references, one can
 initialize an `Option<T>` directly and use its [`.as_ref()`] method to get an
 optional reference.

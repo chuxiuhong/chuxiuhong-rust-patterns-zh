@@ -96,4 +96,4 @@ pub fn walk_expr(visitor: &mut Visitor, e: &Expr) {
 
 [访问者模式](https://en.wikipedia.org/wiki/Visitor_pattern)
 
-[fold](fold.md)模式与访问者模式很相似，区别在于生成了被访问数据结构的新版本。
+[fold](../creational/fold.md)模式与访问者模式很相似，区别在于生成了被访问数据结构的新版本。
