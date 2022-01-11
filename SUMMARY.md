@@ -43,6 +43,7 @@
 
 - [函数式编程](./functional/index.md)
   - [编程范式](./functional/paradigms.md)
+  - [泛型作为类型类](./functional/generics-type-classes.md)
 
 - [补充材料](./additional_resources/index.md)
   - [设计原则](./additional_resources/design-principles.md)
