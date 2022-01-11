@@ -40,7 +40,7 @@ println!("{}", x);
 
 此外要保证一直给你的项目跑`cargo clippy`，它可以判断一些`.clone()`调用不必要的情况，比如[甲](https://rust-lang.github.io/rust-clippy/master/index.html#redundant_clone)，[乙](https://rust-lang.github.io/rust-clippy/master/index.html#clone_on_copy)，[丙](https://rust-lang.github.io/rust-clippy/master/index.html#map_clone)或者[丁](https://rust-lang.github.io/rust-clippy/master/index.html#clone_double_ref).
 
-## 另见
+## 参见
 
 - [`mem::{take(_), replace(_)}`在被更改的枚举中保持拥有的值](../idioms/mem-replace.md)。
 - [`Rc<T>`文档，它智能地处理.clone()](http://doc.rust-lang.org/std/rc/)
