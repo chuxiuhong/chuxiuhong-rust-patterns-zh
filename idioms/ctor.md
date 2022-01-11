@@ -6,6 +6,7 @@ Rust 没有语言层面的构造器。
 取而代之的是常用一个[关联函数][] `new` 创建对象：
 
 ## 示例
+
 ```rust
 /// Time in seconds.
 ///
@@ -111,9 +112,9 @@ any of the [`*or_default` functions in the standard library][std-or-default].
 ## 参阅
 
 - [default idiom](default.md)有对`Default` trait更深入的介绍。
-
 - [生成器模式](../patterns/creational/builder.md)用于有多种构造对象方式的情况。
 
 [associated function]: https://doc.rust-lang.org/stable/book/ch05-03-method-syntax.html#associated-functions
 [std-default]: https://doc.rust-lang.org/stable/std/default/trait.Default.html
 [std-or-default]: https://doc.rust-lang.org/stable/std/?search=or_default
+
