@@ -13,6 +13,14 @@ pub struct Foo {
     bar: String,
 }
 
+impl Foo {
+    // This method will help users to discover the builder
+    pub fn builder() -> FooBuilder {
+        FooBuilder::default()
+    }
+}
+
+#[derive(Default)]
 pub struct FooBuilder {
     // Probably lots of optional fields.
     bar: String,
