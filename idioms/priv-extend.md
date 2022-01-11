@@ -120,4 +120,3 @@ there is rarely a sensible action to take in this scenario.
 ## See also
 
 - [RFC introducing #[non_exhaustive] attribute for enums and structs](https://github.com/rust-lang/rfcs/blob/master/text/2008-non-exhaustive.md)
-
