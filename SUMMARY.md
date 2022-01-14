@@ -22,7 +22,7 @@
 
 - [设计模式](./patterns/index.md)
   - [命令模式](./patterns/behavioural/command.md)
-  - [生成器](./patterns/creational/builder.md)
+  - [建造者](./patterns/creational/builder.md)
   - [分解结构体](./patterns/Structural/compose-structs.md)
   - [外部语言接口使用](./patterns/ffi/ffi-intro.md)
     - [基于对象的API](./patterns/ffi/ffi-export.md)
