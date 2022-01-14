@@ -1,0 +1,422 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js rust">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>泛型作为类型类 - Rust设计模式</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="A catalogue of Rust design patterns, anti-patterns and idioms">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "rust";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('rust')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../intro.html"><strong aria-hidden="true">1.</strong> 引言</a></li><li class="chapter-item expanded "><a href="../idioms/index.html"><strong aria-hidden="true">2.</strong> 习惯用法</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../idioms/coercion-arguments.html"><strong aria-hidden="true">2.1.</strong> 以借用类型为参数</a></li><li class="chapter-item expanded "><a href="../idioms/concat-format.html"><strong aria-hidden="true">2.2.</strong> 用format!连接字符串</a></li><li class="chapter-item expanded "><a href="../idioms/ctor.html"><strong aria-hidden="true">2.3.</strong> 构造器</a></li><li class="chapter-item expanded "><a href="../idioms/default.html"><strong aria-hidden="true">2.4.</strong> Default 特性</a></li><li class="chapter-item expanded "><a href="../idioms/deref.html"><strong aria-hidden="true">2.5.</strong> 将集合视为智能指针</a></li><li class="chapter-item expanded "><a href="../idioms/dtor-finally.html"><strong aria-hidden="true">2.6.</strong> 确定性析构</a></li><li class="chapter-item expanded "><a href="../idioms/mem-replace.html"><strong aria-hidden="true">2.7.</strong> mem::{take(), replace()}</a></li><li class="chapter-item expanded "><a href="../idioms/on-stack-dyn-dispatch.html"><strong aria-hidden="true">2.8.</strong> 栈上动态分发</a></li><li class="chapter-item expanded "><a href="../idioms/ffi/ffi-intro.html"><strong aria-hidden="true">2.9.</strong> 外部语言接口</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../idioms/ffi/ffi-errors.html"><strong aria-hidden="true">2.9.1.</strong> 常见错误处理</a></li><li class="chapter-item expanded "><a href="../idioms/ffi/ffi-accepting-strings.html"><strong aria-hidden="true">2.9.2.</strong> 接受字符串</a></li><li class="chapter-item expanded "><a href="../idioms/ffi/ffi-passing-strings.html"><strong aria-hidden="true">2.9.3.</strong> 传递字符串</a></li></ol></li><li class="chapter-item expanded "><a href="../idioms/option-iter.html"><strong aria-hidden="true">2.10.</strong> 关于 Option的迭代器</a></li><li class="chapter-item expanded "><a href="../idioms/pass-var-to-closure.html"><strong aria-hidden="true">2.11.</strong> 向闭包传递变量</a></li><li class="chapter-item expanded "><a href="../idioms/priv-extend.html"><strong aria-hidden="true">2.12.</strong> 留隐私，为扩展</a></li><li class="chapter-item expanded "><a href="../idioms/rustdoc-init.html"><strong aria-hidden="true">2.13.</strong> 关于初始化的文档</a></li><li class="chapter-item expanded "><a href="../idioms/temporary-mutability.html"><strong aria-hidden="true">2.14.</strong> 临时可变性</a></li></ol></li><li class="chapter-item expanded "><a href="../patterns/index.html"><strong aria-hidden="true">3.</strong> 设计模式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../patterns/behavioural/command.html"><strong aria-hidden="true">3.1.</strong> 命令模式</a></li><li class="chapter-item expanded "><a href="../patterns/creational/builder.html"><strong aria-hidden="true">3.2.</strong> 建造者</a></li><li class="chapter-item expanded "><a href="../patterns/Structural/compose-structs.html"><strong aria-hidden="true">3.3.</strong> 分解结构体</a></li><li class="chapter-item expanded "><a href="../patterns/ffi/ffi-intro.html"><strong aria-hidden="true">3.4.</strong> 外部语言接口使用</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../patterns/ffi/ffi-export.html"><strong aria-hidden="true">3.4.1.</strong> 基于对象的API</a></li><li class="chapter-item expanded "><a href="../patterns/ffi/ffi-wrappers.html"><strong aria-hidden="true">3.4.2.</strong> 类型合并封装</a></li></ol></li><li class="chapter-item expanded "><a href="../patterns/creational/fold.html"><strong aria-hidden="true">3.5.</strong> Fold</a></li><li class="chapter-item expanded "><a href="../patterns/behavioural/interpreter.html"><strong aria-hidden="true">3.6.</strong> 解释器</a></li><li class="chapter-item expanded "><a href="../patterns/behavioural/newtype.html"><strong aria-hidden="true">3.7.</strong> 新类型</a></li><li class="chapter-item expanded "><a href="../patterns/behavioural/RAII.html"><strong aria-hidden="true">3.8.</strong> RAII 守卫</a></li><li class="chapter-item expanded "><a href="../patterns/Structural/small-crates.html"><strong aria-hidden="true">3.9.</strong> 偏爱更小的库</a></li><li class="chapter-item expanded "><a href="../patterns/behavioural/strategy.html"><strong aria-hidden="true">3.10.</strong> 策略模式</a></li><li class="chapter-item expanded "><a href="../patterns/Structural/unsafe-mods.html"><strong aria-hidden="true">3.11.</strong> 将不安全置于小模块中</a></li><li class="chapter-item expanded "><a href="../patterns/behavioural/visitor.html"><strong aria-hidden="true">3.12.</strong> 访问者模式</a></li></ol></li><li class="chapter-item expanded "><a href="../anti_patterns/index.html"><strong aria-hidden="true">4.</strong> 反模式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../anti_patterns/borrow_clone.html"><strong aria-hidden="true">4.1.</strong> clone过借用检查</a></li><li class="chapter-item expanded "><a href="../anti_patterns/deny-warnings.html"><strong aria-hidden="true">4.2.</strong> #[deny(warnings)]</a></li><li class="chapter-item expanded "><a href="../anti_patterns/deref.html"><strong aria-hidden="true">4.3.</strong> Deref 多态</a></li></ol></li><li class="chapter-item expanded "><a href="../functional/index.html"><strong aria-hidden="true">5.</strong> 函数式编程</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../functional/paradigms.html"><strong aria-hidden="true">5.1.</strong> 编程范式</a></li><li class="chapter-item expanded "><a href="../functional/generics-type-classes.html" class="active"><strong aria-hidden="true">5.2.</strong> 泛型作为类型类</a></li></ol></li><li class="chapter-item expanded "><a href="../additional_resources/index.html"><strong aria-hidden="true">6.</strong> 补充材料</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../additional_resources/design-principles.html"><strong aria-hidden="true">6.1.</strong> 设计原则</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust设计模式</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-unofficial/patterns" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#泛型作为类型类" id="泛型作为类型类">泛型作为类型类</a></h1>
+<h2><a class="header" href="#说明" id="说明">说明</a></h2>
+<p>Rust的类型系统设计的更像函数式语言（比如Haskell），而非指令式语言如Java和C++。因此，Rust可以将许多编程问题转换成“静态类型”问题。这是选择函数式语言时最大的亮点之一，对于Rust的许多编译时保证来说是至关重要的。</p>
+<p>这个概念的一个关键部分正是泛型的工作方式。在C++与Java中，举个例子，泛型是编译器的一种元编程结构。C++的<code>vector&lt;int&gt;</code>和<code>vector&lt;char&gt;</code>只是<code>vector</code>类型（叫<code>模板</code>）的同一模板代码的两个不同副本，其中填充了两种不同的类型。</p>
+<p>在Rust中，泛型参数如同函数式语言中的“类型类约束”，而最终用户填写的每个不同的参数<em>实际上都会改变类型</em>。换句话说，<code>Vec&lt;isize&gt;</code>和<code>Vec&lt;char&gt;</code><em>是两个不同的类型</em>，它们被类型系统识别为不同的类型。</p>
+<p>这被称作<strong>单态化</strong>，不同类型以<strong>多态</strong>代码创建。这种特殊行为需要用<code>impl</code>块指定泛型参数：泛型的不同值会导致不同的类型，而不同的类型可以有不同的<code>impl</code>块。</p>
+<p>在面向对象语言中，类可以从父类那里继承行为。实际上，这不仅允许将额外的行为附加到类型类的特定成员上，还允许附加额外的行为。</p>
+<p>最接近的是Javascript和Python中的运行时多态性，新的成员可以被任何构造函数随意添加到对象中。然而，与这些语言不同，Rust的所有额外方法在使用时都可以进行类型检查，因为它们的泛型是静态定义的。这使得它们在保持安全的同时更具有实用性。</p>
+<h2><a class="header" href="#示例" id="示例">示例</a></h2>
+<p>想象你正在为实验室机器集群设计存储服务器。因为涉及的软件，有两个不同的协议需要你支持。BOOTP（用于PXE网络启动），和NFS（用于远程安装存储）。</p>
+<p>你的目标是一个用Rust编写的程序，它可以处理这两种请求。它将有协议handler，监听两种请求。此外，主应用逻辑要允许实验室管理员配置实际文件的存储和安全控制。</p>
+<p>不管来自什么协议，实验室机器对文件的请求都包含相同的基本信息：一个认证方法，和一个要检索的文件名。一个直接的实现会是这样的：</p>
+<pre><code class="language-rust ignore">
+enum AuthInfo {
+    Nfs(crate::nfs::AuthInfo),
+    Bootp(crate::bootp::AuthInfo),
+}
+
+struct FileDownloadRequest {
+    file_name: PathBuf,
+    authentication: AuthInfo,
+}
+</code></pre>
+<p>这种设计可能工作得很好。但现在，假设你需要支持添加<em>协议特定</em>的元数据。例如，对于NFS，你想确定他们的挂载点是什么，以便执行额外的安全规则。</p>
+<p>当前结构的设计方式将协议的决定权留给了运行时。这也就是说，任何适用于一种协议而非另一种协议的方法都需要程序员进行运行时检查。</p>
+<p>下面是获取NFS挂载点的情况：</p>
+<pre><code class="language-rust ignore">struct FileDownloadRequest {
+    file_name: PathBuf,
+    authentication: AuthInfo,
+    mount_point: Option&lt;PathBuf&gt;,
+}
+
+impl FileDownloadRequest {
+    // ... 其他方法 ...
+
+    /// 如果有NFS请求，获取一个NFS挂载点。
+    /// 否则返回None。
+    pub fn mount_point(&amp;self) -&gt; Option&lt;&amp;Path&gt; {
+        self.mount_point.as_ref()
+    }
+}
+</code></pre>
+<p>每个<code>mount_point()</code>的调用者都必须检查<code>None</code>并编写代码来处理它。就算他们知道，在一个给定的代码路径中只有NFS请求被使用。</p>
+<p>如果不同的请求类型被弄混，引起编译时错误会理想。毕竟，用户的整个代码路径，包括他们使用的库中那些函数，都会知道一个请求是NFS请求还是BOOTP请求。</p>
+<p>在Rust中，这是可能的！解决方案是<em>加个泛型</em>，分割API。</p>
+<p>这样子：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">use std::path::{Path, PathBuf};
+
+mod nfs {
+    #[derive(Clone)]
+    pub(crate) struct AuthInfo(String); // NFS会话管理给省了
+}
+
+mod bootp {
+    pub(crate) struct AuthInfo(); // bootp没验证机制
+}
+
+// private module, lest outside users invent their own protocol kinds!
+mod proto_trait {
+    use std::path::{Path, PathBuf};
+    use super::{bootp, nfs};
+
+    pub(crate) trait ProtoKind {
+        type AuthInfo;
+        fn auth_info(&amp;self) -&gt; Self::AuthInfo;
+    }
+
+    pub struct Nfs {
+        auth: nfs::AuthInfo,
+        mount_point: PathBuf,
+    }
+
+    impl Nfs {
+        pub(crate) fn mount_point(&amp;self) -&gt; &amp;Path {
+            &amp;self.mount_point
+        }
+    }
+
+    impl ProtoKind for Nfs {
+        type AuthInfo = nfs::AuthInfo;
+        fn auth_info(&amp;self) -&gt; Self::AuthInfo {
+            self.auth.clone()
+        }
+    }
+
+    pub struct Bootp(); // 没有附加元数据
+
+    impl ProtoKind for Bootp {
+        type AuthInfo = bootp::AuthInfo;
+        fn auth_info(&amp;self) -&gt; Self::AuthInfo {
+            bootp::AuthInfo()
+        }
+    }
+}
+
+use proto_trait::ProtoKind; // 保持内部，以防止 impl
+pub use proto_trait::{Nfs, Bootp}; // 重导出，这样调用者能看到它们
+
+struct FileDownloadRequest&lt;P: ProtoKind&gt; {
+    file_name: PathBuf,
+    protocol: P,
+}
+
+// 把所有共同的API部分放进一个泛型实现块
+impl&lt;P: ProtoKind&gt; FileDownloadRequest&lt;P&gt; {
+    fn file_path(&amp;self) -&gt; &amp;Path {
+        &amp;self.file_name
+    }
+
+    fn auth_info(&amp;self) -&gt; P::AuthInfo {
+        self.protocol.auth_info()
+    }
+}
+
+// all protocol-specific impls go into their own block
+impl FileDownloadRequest&lt;Nfs&gt; {
+    fn mount_point(&amp;self) -&gt; &amp;Path {
+        self.protocol.mount_point()
+    }
+}
+
+fn main() {
+    // 你代码扔这儿
+}
+</code></pre></pre>
+<p>对于这个方法，如果用户搞错了，使用了错误的类型：</p>
+<pre><code class="language-rust ignore">fn main() {
+    let mut socket = crate::bootp::listen()?;
+    while let Some(request) = socket.next_request()? {
+        match request.mount_point().as_ref()
+            &quot;/secure&quot; =&gt; socket.send(&quot;Access denied&quot;),
+            _ =&gt; {} // 继续下去...
+        }
+        // 剩余代码部分放这里
+    }
+}
+</code></pre>
+<p>会得到一个类型错误。类型<code>FileDownloadRequest&lt;Bootp&gt;</code>没实现<code>mount_point()</code>，只有类型<code>FileDownloadRequest&lt;Nfs&gt;</code>实现了。而且说到底，那是NFS模块创建的，不是BOOTP！</p>
+<h2><a class="header" href="#优点" id="优点">优点</a></h2>
+<p>首先，它可以去重多个状态下共有的字段。通过使非共享字段成为泛型字段，它们只需要实现一次。</p>
+<p>其次，它使<code>impl</code>块更容易阅读，因为它们是按状态分解的。所有状态下通用的方法都在一个块中输入一次，而某个状态下特有的方法则在一个单独的块中。</p>
+<p>这两种情况都意味着代码行数更少，而且更有条理。</p>
+<h2><a class="header" href="#缺点" id="缺点">缺点</a></h2>
+<p>目前这将增加二进制文件大小，这是编译器实现单态化的方式造成的。希望这种实现方式在未来能够得到改善。</p>
+<h2><a class="header" href="#替代" id="替代">替代</a></h2>
+<ul>
+<li>
+<p>如果一个类型由于构造或部分初始化，似乎需要一个 “切分的API”，可以考虑用<a href="../patterns/creational/builder.html">Builder模式</a>代替。</p>
+</li>
+<li>
+<p>如果类型之间的API不发生变化，只有行为发生变化，那么最好使用<a href="../patterns/behavioural/strategy.html">策略</a>来代替。</p>
+</li>
+</ul>
+<h2><a class="header" href="#参见" id="参见">参见</a></h2>
+<p>这种模式在整个标准库中都有应用。</p>
+<ul>
+<li><code>Vec&lt;u8&gt;</code> can be cast from a String, unlike every other type of <code>Vec&lt;T&gt;</code>.<sup class="footnote-reference"><a href="#1">1</a></sup></li>
+<li>They can also be cast into a binary heap, but only if they contain a type that implements the <code>Ord</code> trait.<sup class="footnote-reference"><a href="#2">2</a></sup></li>
+<li>The <code>to_string</code> method was specialized for <code>Cow</code> only of type <code>str</code>.<sup class="footnote-reference"><a href="#3">3</a></sup></li>
+</ul>
+<p>它也被一些流行的crate使用，用以改进API灵活性：</p>
+<ul>
+<li>
+<p>The <code>embedded-hal</code> ecosystem used for embedded devices makes extensive use of this pattern. For example, it allows statically verifying the configuration of device registers used to control embedded pins. When a pin is put into a mode, it returns a <code>Pin&lt;MODE&gt;</code> struct, whose generic determines the functions usable in that mode, which are not on the <code>Pin</code> itself. <a href="Example:">^4</a></p>
+</li>
+<li>
+<p><code>hyper</code> HTTP客户端库用它为不同可插拔请求导出富API。Clients with different connectors have different methods on them as well as different trait implementations, while a core set of methods apply to any connector. <a href="See:">^5</a></p>
+</li>
+<li>
+<p>The &quot;type state&quot; pattern -- where an object gains and loses API based on an internal state or invariant -- is implemented in Rust using the same basic concept, and a slightly different technique. <a href="See:">^6</a></p>
+</li>
+</ul>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>见<a href="https://doc.rust-lang.org/stable/src/std/ffi/c_str.rs.html#799-801">impl From&lt;CString&gt; for Vec&lt;u8&gt;</a></p>
+</div>
+<div class="footnote-definition" id="2"><sup class="footnote-definition-label">2</sup>
+<p>见<a href="https://doc.rust-lang.org/stable/src/alloc/collections/binary_heap.rs.html#1345-1354">impl&lt;T&gt; From&lt;Vec&lt;T, Global&gt;&gt; for BinaryHeap&lt;T&gt;</a></p>
+</div>
+<div class="footnote-definition" id="3"><sup class="footnote-definition-label">3</sup>
+<p>见<a href="https://doc.rust-lang.org/stable/src/alloc/string.rs.html#2235-2240">impl&lt;'<em>&gt; ToString for Cow&lt;'</em>, str&gt;</a></p>
+</div>
+<p><a href="https://docs.rs/stm32f30x-hal/0.1.0/stm32f30x_hal/gpio/gpioa/struct.PA0.html">https://docs.rs/stm32f30x-hal/0.1.0/stm32f30x_hal/gpio/gpioa/struct.PA0.html</a></p>
+<p><a href="https://docs.rs/hyper/0.14.5/hyper/client/struct.Client.html">https://docs.rs/hyper/0.14.5/hyper/client/struct.Client.html</a></p>
+<p><a href="https://web.archive.org/web/20210325065112/https://www.novatec-gmbh.de/en/blog/the-case-for-the-typestate-pattern-the-typestate-pattern-itself/">The Case for the Type State Pattern</a> and <a href="https://web.archive.org/web/20210328164854/https://rustype.github.io/notes/notes/rust-typestate-series/rust-typestate-index">Rusty Typestate Series (an extensive thesis)</a></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../functional/paradigms.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../additional_resources/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../functional/paradigms.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../additional_resources/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
