@@ -90,7 +90,7 @@ fn deref<'a>(&'a self) -> &'a T {
 
 ## 参阅
 
-[Finalisation in destructors idiom](../idioms/dtor-finally.md)
+[Finalisation in destructors idiom](../../idioms/dtor-finally.md)
 
 RAII is a common pattern in C++: [cppreference.com](http://en.cppreference.com/w/cpp/language/raii),
 [wikipedia][wikipedia].

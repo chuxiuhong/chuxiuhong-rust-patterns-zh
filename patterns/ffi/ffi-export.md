@@ -179,10 +179,10 @@ datum   dbm_nextkey(DBM *);
 
 其次，根据API各部分之间的关系，可能会涉及大量的设计工作。许多更简单的设计点都有与之相关的设计模式：
 
-- [类型合并封装](./ffi-wrappers.md) 打包多个Rust类型为一个不透明的对象
+- [类型合并封装](ffi-wrappers.md) 打包多个Rust类型为一个不透明的对象
   
-- [常见错误处理](../idioms/ffi-errors.md) 讲述使用整型作为错误代码和返回值的哨兵（就像`NULL`指针一样）
+- [常见错误处理](../../idioms/ffi/ffi-errors.md) 讲述使用整型作为错误代码和返回值的哨兵（就像`NULL`指针一样）
   
-- [接受字符串](../idioms/ffi-accepting-strings.md) 代码的情况下接受字符串，并且更容易成功[传递字符串](../idioms/ffi-passing-strings.md)
+- [接受字符串](../../idioms/ffi/ffi-accepting-strings.md) 代码的情况下接受字符串，并且更容易成功[传递字符串](../../idioms/ffi/ffi-passing-strings.md)
 
 不过，也不是所有API都可以这样设计。具体情况具体分析。

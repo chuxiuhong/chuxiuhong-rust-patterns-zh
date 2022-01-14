@@ -61,4 +61,4 @@ Rust对每个栈帧中的每个对象执行析构器代码。所以析构器即�
 
 ## 参阅
 
-[RAII](../patterns/RAII.md).
+[RAII](../patterns/behavioural/RAII.md).
