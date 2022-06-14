@@ -63,7 +63,7 @@ let readable: Box<dyn io::Read> = if arg == "-" {
 
 * 所有的变量都在使用前初始化（这个例子中是借用）
 * 每个变量都只有单一类型。在我们的例子中，`stdin`对应`Stdin`类型，`file`对应`File`类型，`readable`对应`&mut dyn Read`类型
-* 每个借用的值的生命周期都比借用他们的场。
+* 每个借用的值的生命周期都比借用他们的长。
 
 ## 参阅
 
