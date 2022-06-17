@@ -215,7 +215,7 @@ let readable: Box&lt;dyn io::Read&gt; = if arg == &quot;-&quot; {
 <ul>
 <li>所有的变量都在使用前初始化（这个例子中是借用）</li>
 <li>每个变量都只有单一类型。在我们的例子中，<code>stdin</code>对应<code>Stdin</code>类型，<code>file</code>对应<code>File</code>类型，<code>readable</code>对应<code>&amp;mut dyn Read</code>类型</li>
-<li>每个借用的值的生命周期都比借用他们的场。</li>
+<li>每个借用的值的生命周期都比借用他们的长。</li>
 </ul>
 <h2><a class="header" href="#参阅" id="参阅">参阅</a></h2>
 <ul>
