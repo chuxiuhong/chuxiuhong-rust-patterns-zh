@@ -9,9 +9,10 @@ jobs:
   markdown-link-check:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v4
     - uses: gaurav-nelson/github-action-markdown-link-check@v1
       with:
         use-verbose-mode: 'yes'
         use-quiet-mode: 'yes'
         config-file: '.github/workflows/url-check-config.json'
+        base-branch: 'main'

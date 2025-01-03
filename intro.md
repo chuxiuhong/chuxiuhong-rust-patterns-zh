@@ -25,7 +25,5 @@
 - [设计模式](./patterns/index.md) 是编写软件过程中解决常见问题的方法。
 - [反模式](./anti_patterns/index.md) 是解决常见问题的方法。
   然而设计模式带给我们好处，反模式却带来更多的问题。
-- [习惯用法](./idioms/index.md) 是编码的指导方针。它是社区的共同规范。除非你有明确的理由，      否则就遵守它。
+- [习惯用法](./idioms/index.md) 是编码的指导方针。它是社区的共同规范。除非你有明确的理由，否则就遵守它。
 
-TODO: Mention why Rust is a bit special - functional elements, type system,
-borrow checker

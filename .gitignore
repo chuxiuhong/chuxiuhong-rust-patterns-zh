@@ -1,4 +1,4 @@
 # Generated output of mdbook
-.idea
+/book
 .DS_Store
-book/
+.vscode/settings.json
